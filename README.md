@@ -73,6 +73,11 @@ Trata-se de uma libraria responsável por tratar das rotas das diferentes págin
 
 **Instalação** `npm install react-router-dom`
 
+#### Axios
+Trata-se de uma libraria que permite fazer pedidos a uma API. [Documentação](https://www.npmjs.com/package/axios)
+
+**Instalação** `npm i axios`
+
 <br>
 
 ### O que é que tem de ser feito para correr o projeto?
