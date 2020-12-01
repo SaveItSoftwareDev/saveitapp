@@ -52,28 +52,35 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 Sugere-se a utilização do **Visual Studio Code**
 
-Para poder criar projetos React é necessário ter instalado o *create-react-app*. Para isso podemos instala-lo usando o comando `npm install -g create-react-app` no terminal. Este passo não é obrigatório para correr este projeto, uma vez que o código já está gerado.
+Opcional, mas útil: instalar os seguintes pluins do VSCode:
 
+`vscode-styled-components`
+`TSLint`
+
+Para poder criar projetos React é necessário ter instalado o _create-react-app_. Para isso podemos instala-lo usando o comando `npm install -g create-react-app` no terminal. Este passo não é obrigatório para correr este projeto, uma vez que o código já está gerado.
 
 ### Dependências do projeto
 
-#### React bootstrap 
+#### React bootstrap
+
 Trata-se de uma libraria de CSS que cujos componentes foram convertidos em componentes react prontos a usar. [Documentação](https://react-bootstrap.github.io/)
 
 **Instalação:** `npm install react-bootstrap bootstrap`
 
-
 #### Styled Components
+
 Trata-se de uma libraria que permite criar componentes com base em propriedades CSS. [Documentação](https://github.com/styled-components/styled-components)
 
-**Instalação** `npm i styled-components`
+**Instalação** `npm i styled-components` e `npm install @types/styled-components`
 
 #### React Router
+
 Trata-se de uma libraria responsável por tratar das rotas das diferentes páginas da aplicação. [Documentação](https://reactrouter.com/web/guides/quick-start)
 
-**Instalação** `npm install react-router-dom`
+**Instalação** `npm install react-router-dom` e `npm install @types/react-router-dom`
 
 #### Axios
+
 Trata-se de uma libraria que permite fazer pedidos a uma API. [Documentação](https://www.npmjs.com/package/axios)
 
 **Instalação** `npm i axios`
@@ -84,3 +91,14 @@ Trata-se de uma libraria que permite fazer pedidos a uma API. [Documentação](h
 
 Para correr o projeto, basta executar `npm start` dentro da diretoria da raiz do mesmo.
 
+### Como faço para criar uma nova página?
+
+Para criar uma nova página devem ser seguidos os seguintes passos:
+
+1. Criar uma nova pasta dentro de `pages` com o nome da pasta, por exemplo **dashboard**. Dentro dessa pasta, colocar dois ficheiros: `dasboard.page.tsx` e `dashboard.styled.tsx`. (Não é obrigatório que tenham estes nomes, poderia ser `xpto.tsx`, trata-se de uma convenção de forma a estruturar o código convenientemente). O ficheiro `dashboard.page.tsx` será onde ficará toda a programação da página. O ficheiro `dashboard.styled.tsx` será onde criamos os _styled componentes_ particulares da página (por exemplo uma `div` com um fundo amarelo).
+
+1. No ficheiro `App.tsx` acrescentar a rota para a página a criar, por exemplo `/profile`
+
+```tsx
+<Route exact path="/profile" render={() => <ProfilePage />}></Route>
+```
