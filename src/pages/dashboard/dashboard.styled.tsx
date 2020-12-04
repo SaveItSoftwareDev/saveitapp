@@ -9,4 +9,14 @@ export const PageContainer = styled.div`
     background-color: #3b3b3b;
     height: 100%;
   }
+
+  .avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 50% !important;
+  }
+
+  .branco {
+    color: #fff;
+  }
 `;
