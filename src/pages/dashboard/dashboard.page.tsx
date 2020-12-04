@@ -14,6 +14,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
             SideBar
           </BS.Col>
           <BS.Col lg={10}>Content dashboard</BS.Col>
+          <div></div>
         </BS.Row>
       </BS.Container>
     </S.PageContainer>
