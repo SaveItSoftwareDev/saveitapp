@@ -65,25 +65,25 @@ Para poder criar projetos React é necessário ter instalado o _create-react-app
 
 Trata-se de uma libraria de CSS que cujos componentes foram convertidos em componentes react prontos a usar. [Documentação](https://react-bootstrap.github.io/)
 
-**Instalação:** `npm install react-bootstrap bootstrap`
+**Instalação:** `npm install react-bootstrap bootstrap --save`
 
 #### Styled Components
 
 Trata-se de uma libraria que permite criar componentes com base em propriedades CSS. [Documentação](https://github.com/styled-components/styled-components)
 
-**Instalação** `npm i styled-components` e `npm install @types/styled-components`
+**Instalação** `npm i styled-components --save` e `npm install @types/styled-components --save`
 
 #### React Router
 
 Trata-se de uma libraria responsável por tratar das rotas das diferentes páginas da aplicação. [Documentação](https://reactrouter.com/web/guides/quick-start)
 
-**Instalação** `npm install react-router-dom` e `npm install @types/react-router-dom`
+**Instalação** `npm install react-router-dom --save` e `npm install @types/react-router-dom --save`
 
 #### Axios
 
 Trata-se de uma libraria que permite fazer pedidos a uma API. [Documentação](https://www.npmjs.com/package/axios)
 
-**Instalação** `npm i axios`
+**Instalação** `npm i axios --save`
 
 <br>
 
