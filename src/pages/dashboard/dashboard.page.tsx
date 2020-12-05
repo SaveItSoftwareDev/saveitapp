@@ -35,8 +35,11 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
         <BS.Row className="h-100">
           <BS.Col lg={2} className="sidebar">
             <BS.Container>
-              <BS.Row className="mt-5">
-                <BS.Col className="text-center" lg={12}>
+              <BS.Row className="branco">
+                <h1 className="w-100 text-center">Save iT</h1>
+              </BS.Row>
+              <BS.Row className="mt-2">
+                <BS.Col lg={12}>
                   <BS.Image
                     className={"avatar"}
                     src="images/avatar.png"
@@ -45,69 +48,109 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                 </BS.Col>
               </BS.Row>
               <BS.Row className="mt-2">
+                <BS.Col lg={12}>
+                  <h5 className="branco">Bem vindo Rui Guerreiro!</h5>
+                </BS.Col>
+              </BS.Row>
+              <BS.Row className="mt-2">
+                <BS.Col lg={12}>
+                  <p className="branco">Planeamentos</p>
+                </BS.Col>
+              </BS.Row>
+              <BS.Row className="mt-2">
+                <BS.Col lg={12}>
+                  <p className="branco">Investimentos</p>
+                </BS.Col>
+              </BS.Row>
+              <BS.Row className="mt-2">
+                <BS.Col lg={12}>
+                  <p className="branco">Alertas</p>
+                </BS.Col>
+              </BS.Row>
+              <BS.Row className="mt-2">
+                <BS.Col lg={12}>
+                  <p className="branco">Definições</p>
+                </BS.Col>
+              </BS.Row>
+              <BS.Row className="mt-2">
                 <BS.Col className="text-center" lg={12}>
-                  <h3 className="branco">Irene T</h3>
+                  <p className="branco">Sair</p>
                 </BS.Col>
               </BS.Row>
             </BS.Container>
           </BS.Col>
           <BS.Col lg={10}>
-            <BS.Container fluid>
-              <h1>SaveIt Dasbhoard</h1>
+            <BS.Container fluid className="mt-2">
               <BS.Row>
-                <BS.Col lg={2}>
-                  <BS.Card>
-                    <BS.Card.Body className={"green"}>
+                <BS.Col lg={3}>
+                  <BS.Card className={"saldo-total"}>
+                    <BS.Card.Body>
                       <BS.Card.Title>Saldo Total</BS.Card.Title>
-                      <BS.Card.Text>1024.00€</BS.Card.Text>
+                      <BS.Card.Text>1.024,00€</BS.Card.Text>
                     </BS.Card.Body>
                   </BS.Card>
                 </BS.Col>
-                <BS.Col lg={2}>
-                  <BS.Card>
+                <BS.Col lg={3}>
+                  <BS.Card className={"saldo-conta"}>
                     <BS.Card.Body>
-                      <BS.Card.Title>AtivoBank</BS.Card.Title>
-                      <BS.Card.Text>14.00€</BS.Card.Text>
+                      <BS.Card.Title>Saldo Conta</BS.Card.Title>
+                      <BS.Card.Text>
+                        <strong>15,00€</strong>
+                        <p>Ativobank</p>
+                      </BS.Card.Text>
                     </BS.Card.Body>
                   </BS.Card>
                 </BS.Col>
-                <BS.Col lg={2}>
-                  <BS.Card>
+                <BS.Col lg={3}>
+                  <BS.Card className={"saldo-despesa"}>
                     <BS.Card.Body>
-                      <BS.Card.Title>Receitas</BS.Card.Title>
-                      <BS.Card.Text>4.00€</BS.Card.Text>
+                      <BS.Card.Title>Receita Mensal</BS.Card.Title>
+                      <BS.Card.Text>
+                        <strong>4,00€</strong>
+                        <p>novembro 2020</p>
+                      </BS.Card.Text>
                     </BS.Card.Body>
                   </BS.Card>
                 </BS.Col>
-                <BS.Col lg={2}>
-                  <BS.Card>
+                <BS.Col lg={3}>
+                  <BS.Card className={"saldo-receita"}>
                     <BS.Card.Body>
-                      <BS.Card.Title>Despesas</BS.Card.Title>
-                      <BS.Card.Text>56.00€</BS.Card.Text>
+                      <BS.Card.Title>Despesa Mensal</BS.Card.Title>
+                      <BS.Card.Text>
+                        <strong>56,00€</strong>
+                        <p>novembro 2020</p>
+                      </BS.Card.Text>
                     </BS.Card.Body>
                   </BS.Card>
                 </BS.Col>
               </BS.Row>
               <BS.Row className={"mt-2"}>
+                <BS.Col lg="8"></BS.Col>
                 <BS.Col lg="4">
-                  <BS.Card>
-                    <BS.Card.Body>
-                      <BS.Card.Title>Despesas</BS.Card.Title>
-                      <BS.Card.Text>
-                        <Doughnut data={dataDespesa} />
-                      </BS.Card.Text>
-                    </BS.Card.Body>
-                  </BS.Card>
-                </BS.Col>
-                <BS.Col lg="4">
-                  <BS.Card>
-                    <BS.Card.Body>
-                      <BS.Card.Title>Receitas</BS.Card.Title>
-                      <BS.Card.Text>
-                        <Doughnut data={dataReceita} />
-                      </BS.Card.Text>
-                    </BS.Card.Body>
-                  </BS.Card>
+                  <BS.Row>
+                    <BS.Col lg="12">
+                      <BS.Card>
+                        <BS.Card.Body>
+                          <BS.Card.Title>Receitas novembro 2020</BS.Card.Title>
+                          <BS.Card.Text>
+                            <Doughnut data={dataReceita} />
+                          </BS.Card.Text>
+                        </BS.Card.Body>
+                      </BS.Card>
+                    </BS.Col>
+                  </BS.Row>
+                  <BS.Row className={"mt-2"}>
+                    <BS.Col lg={12}>
+                      <BS.Card>
+                        <BS.Card.Body>
+                          <BS.Card.Title>Despesas novembro 2020</BS.Card.Title>
+                          <BS.Card.Text>
+                            <Doughnut data={dataDespesa} />
+                          </BS.Card.Text>
+                        </BS.Card.Body>
+                      </BS.Card>
+                    </BS.Col>
+                  </BS.Row>
                 </BS.Col>
               </BS.Row>
             </BS.Container>
