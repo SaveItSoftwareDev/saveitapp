@@ -29,7 +29,14 @@ export const LoginPage: React.FC<ILoginPageProps> = (props) => {
               <Formik
                 validationSchema={schema}
                 onSubmit={(values: ILoginData) => {
-                  SERVICE.methods.doLogin(values);
+                  SERVICE.methods
+                    .doLogin(values)
+                    .then((result) => {
+                      console.log(
+                        "LOGIN COM SUCESSO! -> Redirecionar para DASHBOARD"
+                      );
+                    })
+                    .catch((err) => console.log("Erro ao fazer login"));
                 }}
                 initialValues={initialValues}
               >

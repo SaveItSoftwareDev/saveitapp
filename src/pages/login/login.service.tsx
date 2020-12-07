@@ -9,7 +9,7 @@ export interface ILoginData {
 export const SERVICE = {
   methods: {
     doLogin: (data: ILoginData) => {
-      axios.post("localhost:3000/login", data);
+      return axios.post("localhost:3000/login", data);
     },
   },
 };
