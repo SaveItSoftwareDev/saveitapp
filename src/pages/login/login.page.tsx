@@ -10,7 +10,7 @@ import * as yup from "yup";
 
 const schema = yup.object({
   username: yup.string().required(),
-  password: yup.string().required(),
+  password: yup.string().required().min(5),
 });
 
 const initialValues: ILoginData = {
@@ -49,7 +49,7 @@ export const LoginPage: React.FC<ILoginPageProps> = (props) => {
                   isValid,
                   errors,
                 }) => (
-                  <BS.Form className="w-100">
+                  <BS.Form noValidate onSubmit={handleSubmit} className="w-100">
                     <BS.Form.Group controlId="formBasicEmail">
                       <BS.Form.Control
                         type="email"
@@ -79,14 +79,7 @@ export const LoginPage: React.FC<ILoginPageProps> = (props) => {
                         <BS.Button className="w-100">Criar registo</BS.Button>
                       </BS.Col>
                       <BS.Col lg={6}>
-                        <BS.Button
-                          type="submit"
-                          className="w-100"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleSubmit();
-                          }}
-                        >
+                        <BS.Button type="submit" className="w-100">
                           Entrar
                         </BS.Button>
                       </BS.Col>
