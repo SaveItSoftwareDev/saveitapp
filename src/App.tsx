@@ -7,6 +7,7 @@ import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 //Pages
 import { DashboarPage } from "./pages/dashboard/dashboard.page";
 import { LoginPage } from "./pages/login/login.page";
+import { RegisterPage } from "./pages/register/register.page";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route exact path="/" render={() => <DashboarPage />}></Route>
         <Route exact path="/dashboard" render={() => <DashboarPage />}></Route>
         <Route exact path="/login" render={() => <LoginPage />}></Route>
+        <Route exact path="/register" render={() => <RegisterPage />}></Route>
       </Switch>
     </BrowserRouter>
   );
