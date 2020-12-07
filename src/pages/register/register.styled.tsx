@@ -4,7 +4,11 @@ export const PageContainer = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
-  background-color: #3b3b3b;
+
+  .sidebar {
+    background-color: #3b3b3b;
+    height: 100%;
+  }
 
   .flex-center-center {
     display: flex;
@@ -40,7 +44,6 @@ export const FormContainer = styled.div`
   background-color: #fff;
   border-radius: 10px;
   padding: 10px;
-  height: 300px;
   width: 100%;
   box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1), 0 10px 30px 0 rgba(0, 0, 0, 0.2);
 `;

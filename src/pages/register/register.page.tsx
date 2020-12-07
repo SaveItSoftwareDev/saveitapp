@@ -37,7 +37,7 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
     <S.PageContainer>
       <BS.Container fluid className="h-100">
         <BS.Row className="h-100">
-          <BS.Col lg={2}>
+          <BS.Col lg={2} className="sidebar">
             <BS.Container>
               <BS.Row className="branco">
                 <h1>Save iT</h1>
@@ -45,8 +45,8 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
             </BS.Container>
           </BS.Col>
           <BS.Col lg={8} className="flex-center-center">
-            <BS.Container>
-              <S.FormContainer className="flex-center-center">
+            <BS.Container fluid>
+              <S.FormContainer>
                 <Formik
                   validationSchema={schema}
                   onSubmit={(values: IRegisterData) => {
@@ -75,106 +75,110 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
                       onSubmit={handleSubmit}
                       className="w-100"
                     >
-                      <BS.Form.Group>
-                        <BS.Form.Control
-                          className="italico"
-                          type="text"
-                          name="firstName"
-                          placeholder="primeiro nome"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.firtsName}
-                          isValid={touched.firtsName && !errors.firtsName}
-                        />
-                      </BS.Form.Group>
-                      <BS.Form.Group>
-                        <BS.Form.Control
-                          className="italico"
-                          type="text"
-                          name="lastName"
-                          placeholder="último nome"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.lastName}
-                          isValid={touched.lastName && !errors.lastName}
-                        />
-                      </BS.Form.Group>
-                      <BS.Form.Group>
-                        <BS.Form.Control
-                          className="italico"
-                          type="email"
-                          name="email"
-                          placeholder="e-mail"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.email}
-                          isValid={touched.email && !errors.email}
-                        />
-                      </BS.Form.Group>
+                      <BS.Row>
+                        <BS.Col>
+                          <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="text"
+                              name="firstName"
+                              placeholder="primeiro nome"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.firtsName}
+                              isValid={touched.firtsName && !errors.firtsName}
+                            />
+                          </BS.Form.Group>
+                          <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="text"
+                              name="lastName"
+                              placeholder="último nome"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.lastName}
+                              isValid={touched.lastName && !errors.lastName}
+                            />
+                          </BS.Form.Group>
+                          <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="email"
+                              name="email"
+                              placeholder="e-mail"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.email}
+                              isValid={touched.email && !errors.email}
+                            />
+                          </BS.Form.Group>
 
-                      <BS.Form.Group>
-                        <BS.Form.Control
-                          className="italico"
-                          type="password"
-                          name="password"
-                          placeholder="primeiro nome"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.password}
-                          isValid={touched.password && !errors.password}
-                        />
-                      </BS.Form.Group>
+                          <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="password"
+                              name="password"
+                              placeholder="password"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.password}
+                              isValid={touched.password && !errors.password}
+                            />
+                          </BS.Form.Group>
 
-                      <BS.Form.Group>
-                        <BS.Form.Control
-                          className="italico"
-                          type="number"
-                          name="age"
-                          placeholder="idade"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.age}
-                          isValid={touched.age && !errors.age}
-                        />
-                      </BS.Form.Group>
+                          <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="number"
+                              name="age"
+                              placeholder="idade"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.age}
+                              isValid={touched.age && !errors.age}
+                            />
+                          </BS.Form.Group>
 
-                      <BS.Form.Group>
-                        <BS.Form.Control
-                          className="italico"
-                          type="text"
-                          name="gender"
-                          placeholder="género"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.gender}
-                          isValid={touched.gender && !errors.gender}
-                        />
-                      </BS.Form.Group>
-                      <BS.Form.Group>
-                        <BS.Form.Control
-                          className="italico"
-                          type="text"
-                          name="city"
-                          placeholder="cidade"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.city}
-                          isValid={touched.city && !errors.city}
-                        />
-                      </BS.Form.Group>
+                          <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="text"
+                              name="gender"
+                              placeholder="género"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.gender}
+                              isValid={touched.gender && !errors.gender}
+                            />
+                          </BS.Form.Group>
+                          <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="text"
+                              name="city"
+                              placeholder="cidade"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.city}
+                              isValid={touched.city && !errors.city}
+                            />
+                          </BS.Form.Group>
 
-                      <BS.Form.Group>
-                        <BS.Form.Control
-                          className="italico"
-                          type="text"
-                          name="job"
-                          placeholder="profissão"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.job}
-                          isValid={touched.job && !errors.job}
-                        />
-                      </BS.Form.Group>
+                          <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="text"
+                              name="job"
+                              placeholder="profissão"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.job}
+                              isValid={touched.job && !errors.job}
+                            />
+                          </BS.Form.Group>
+                        </BS.Col>
+                      </BS.Row>
 
                       <BS.Row>
                         <BS.Col lg={3}>
