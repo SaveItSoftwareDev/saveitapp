@@ -52,6 +52,7 @@ export const LoginPage: React.FC<ILoginPageProps> = (props) => {
                   <BS.Form noValidate onSubmit={handleSubmit} className="w-100">
                     <BS.Form.Group>
                       <BS.Form.Control
+                        className="italico"
                         type="email"
                         name="email"
                         placeholder="e-mail"
@@ -64,6 +65,7 @@ export const LoginPage: React.FC<ILoginPageProps> = (props) => {
 
                     <BS.Form.Group>
                       <BS.Form.Control
+                        className="italico"
                         type="password"
                         name="password"
                         placeholder="password"
@@ -76,11 +78,13 @@ export const LoginPage: React.FC<ILoginPageProps> = (props) => {
 
                     <BS.Row>
                       <BS.Col lg={6}>
-                        <BS.Button className="w-100">Criar registo</BS.Button>
+                        <BS.Button type="submit" className="w-100 botao-entrar">
+                          entrar
+                        </BS.Button>
                       </BS.Col>
                       <BS.Col lg={6}>
-                        <BS.Button type="submit" className="w-100">
-                          Entrar
+                        <BS.Button className="w-100 botao-registo">
+                          Novo registo
                         </BS.Button>
                       </BS.Col>
                     </BS.Row>
@@ -90,7 +94,7 @@ export const LoginPage: React.FC<ILoginPageProps> = (props) => {
             </S.FormContainer>
           </BS.Col>
           <BS.Col lg={9} className="flex-center-center">
-            <S.WelcomeTitle>Bem vindo à SaveIt</S.WelcomeTitle>
+            <S.WelcomeTitle>Bem vindo à Save iT</S.WelcomeTitle>
           </BS.Col>
         </BS.Row>
       </BS.Container>

@@ -12,6 +12,24 @@ export const PageContainer = styled.div`
     justify-content: center;
     align-items: center;
   }
+
+  .botao-entrar {
+    background-color: #585858;
+    border-color: #585858;
+    font-weight: 600;
+  }
+
+  .botao-registo {
+    background-color: transparent;
+    border-color: transparent;
+    color: blue;
+    font-size: 14px;
+    text-decoration: underline;
+  }
+
+  .italico {
+    font-style: italic;
+  }
 `;
 
 export const FormContainer = styled.div`
@@ -20,6 +38,7 @@ export const FormContainer = styled.div`
   padding: 10px;
   height: 300px;
   width: 100%;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1), 0 10px 30px 0 rgba(0, 0, 0, 0.2);
 `;
 
 export const WelcomeTitle = styled.h1`
