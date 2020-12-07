@@ -85,6 +85,18 @@ Trata-se de uma libraria que permite fazer pedidos a uma API. [Documentação](h
 
 **Instalação** `npm i axios --save`
 
+#### Formik
+
+Trata-se de uma libraria que permite lidar com formulários e a sua validação. [Documentação](https://formik.org/docs/overview)
+
+**Instalação** `npm i formik --save`
+
+#### Yup
+
+Trata-se de uma libraria que permite criar schemas de validação. [Documentação](https://github.com/jquense/yup)
+
+**Instalação** `npm i yup --save`
+
 <br>
 
 ### O que é que tem de ser feito para correr o projeto?

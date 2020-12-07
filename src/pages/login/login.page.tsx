@@ -9,12 +9,12 @@ import { Formik } from "formik";
 import * as yup from "yup";
 
 const schema = yup.object({
-  username: yup.string().required(),
+  email: yup.string().required(),
   password: yup.string().required().min(5),
 });
 
 const initialValues: ILoginData = {
-  username: "",
+  email: "",
   password: "",
 };
 interface ILoginPageProps {}
@@ -50,23 +50,23 @@ export const LoginPage: React.FC<ILoginPageProps> = (props) => {
                   errors,
                 }) => (
                   <BS.Form noValidate onSubmit={handleSubmit} className="w-100">
-                    <BS.Form.Group controlId="formBasicEmail">
+                    <BS.Form.Group>
                       <BS.Form.Control
                         type="email"
-                        name="username"
-                        placeholder="Enter email"
+                        name="email"
+                        placeholder="e-mail"
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.username}
-                        isValid={touched.username && !errors.username}
+                        value={values.email}
+                        isValid={touched.email && !errors.email}
                       />
                     </BS.Form.Group>
 
-                    <BS.Form.Group controlId="formBasicPassword">
+                    <BS.Form.Group>
                       <BS.Form.Control
                         type="password"
                         name="password"
-                        placeholder="Password"
+                        placeholder="password"
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.password}

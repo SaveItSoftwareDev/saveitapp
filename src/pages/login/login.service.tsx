@@ -1,8 +1,7 @@
 import axios from "axios";
-import { string } from "yup";
 
 export interface ILoginData {
-  username: string;
+  email: string;
   password: string;
 }
 
