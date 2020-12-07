@@ -49,7 +49,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
               </BS.Row>
               <BS.Row className="mt-2">
                 <BS.Col lg={12}>
-                  <h5 className="branco">Bem vindo Rui Guerreiro!</h5>
+                  <h5 className="branco">Bem vindo Tiago!</h5>
                 </BS.Col>
               </BS.Row>
               <BS.Row className="mt-2">
