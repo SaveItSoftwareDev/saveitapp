@@ -19,7 +19,7 @@ function App() {
       of them to render at a time
     */}
       <Switch>
-        <Route exact path="/" render={() => <DashboarPage />}></Route>
+        <Route exact path="/" render={() => <LoginPage />}></Route>
         <Route exact path="/dashboard" render={() => <DashboarPage />}></Route>
         <Route exact path="/login" render={() => <LoginPage />}></Route>
         <Route exact path="/register" render={() => <RegisterPage />}></Route>
