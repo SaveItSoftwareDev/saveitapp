@@ -7,6 +7,7 @@ import * as BS from "react-bootstrap";
 import { Formik } from "formik";
 
 import * as yup from "yup";
+import { useHistory } from "react-router-dom";
 
 const schema = yup.object({
   email: yup.string().required(),
@@ -20,6 +21,9 @@ const initialValues: ILoginData = {
 interface ILoginPageProps {}
 
 export const LoginPage: React.FC<ILoginPageProps> = (props) => {
+  // Hook - função responsável por fazer os devidos redirects na página.
+  const history = useHistory();
+
   return (
     <S.PageContainer>
       <BS.Container fluid className="h-100">
@@ -35,8 +39,13 @@ export const LoginPage: React.FC<ILoginPageProps> = (props) => {
                       console.log(
                         "LOGIN COM SUCESSO! -> Redirecionar para DASHBOARD"
                       );
+                      history.push("/dashboard");
                     })
-                    .catch((err) => console.log("Erro ao fazer login"));
+                    .catch((err) => {
+                      console.log("Erro ao fazer login");
+                      // remove this before tests
+                      history.push("/dashboard");
+                    });
                 }}
                 initialValues={initialValues}
               >

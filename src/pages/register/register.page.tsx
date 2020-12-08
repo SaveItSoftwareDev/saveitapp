@@ -7,6 +7,7 @@ import * as BS from "react-bootstrap";
 import { Formik } from "formik";
 
 import * as yup from "yup";
+import { useHistory } from "react-router-dom";
 
 const schema = yup.object({
   firstName: yup.string().trim().required().min(2).max(30),
@@ -33,6 +34,7 @@ const initialValues: IRegisterData = {
 interface IRegisterPageProps {}
 
 export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
+  const history = useHistory();
   return (
     <S.PageContainer>
       <BS.Container fluid className="h-100">
@@ -56,6 +58,7 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
                         console.log(
                           "REGISTO COM SUCESSO! -> Redirecionar para DASHBOARD"
                         );
+                        history.push("/login");
                       })
                       .catch((err) => console.log("Erro ao fazer registo"));
                   }}
