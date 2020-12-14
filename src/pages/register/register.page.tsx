@@ -193,10 +193,10 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
                       </BS.Row>
 
                       <BS.Row>
-                        <BS.Col lg={3}>
+                        <BS.Col lg={3} className="alinhamento-direita">
                           <BS.Button
                             type="submit"
-                            className="w-100 botao-entrar"
+                            className="w-100 botao-salvar"
                           >
                             salvar
                           </BS.Button>
