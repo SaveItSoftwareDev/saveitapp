@@ -17,6 +17,12 @@ export const PageContainer = styled.div`
     align-items: center;
   }
 
+  .avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50% !important;
+  }
+
   .botao-entrar {
     background-color: #585858;
     border-color: #585858;

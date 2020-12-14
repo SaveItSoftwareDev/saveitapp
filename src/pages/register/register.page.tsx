@@ -44,6 +44,15 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
               <BS.Row className="branco">
                 <h1>Save iT</h1>
               </BS.Row>
+              <BS.Row className="mt-2">
+                <BS.Col lg={12}>
+                  <BS.Image
+                    className={"avatar"}
+                    src="images/avatar.png"
+                    rounded
+                  />
+                </BS.Col>
+              </BS.Row>
             </BS.Container>
           </BS.Col>
           <BS.Col lg={8} className="flex-center-center">

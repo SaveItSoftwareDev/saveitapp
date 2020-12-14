@@ -36,7 +36,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
           <BS.Col lg={2} className="sidebar">
             <BS.Container>
               <BS.Row className="branco">
-                <h1 className="w-100 text-center">Save iT</h1>
+                <h1 className="w-100">Save iT</h1>
               </BS.Row>
               <BS.Row className="mt-2">
                 <BS.Col lg={12}>
