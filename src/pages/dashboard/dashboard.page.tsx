@@ -4,9 +4,14 @@ import * as S from "./dashboard.styled";
 import * as BS from "react-bootstrap";
 import { Doughnut } from "react-chartjs-2";
 
+import Carousel from "react-bootstrap/Carousel";
+import { useHistory } from "react-router-dom";
+
 interface IDashboarPageProps {}
 
 export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
+  const history = useHistory();
+
   const dataDespesa = {
     labels: ["Supermercado", "Cinema", "Ginásio"],
     datasets: [
@@ -73,7 +78,13 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                 </BS.Col>
               </BS.Row>
               <BS.Row className="mt-2">
-                <BS.Col className="text-center" lg={12}>
+                <BS.Col
+                  className="text-center"
+                  lg={12}
+                  onClick={() => {
+                    history.push("/login");
+                  }}
+                >
                   <p className="branco">Sair</p>
                 </BS.Col>
               </BS.Row>
@@ -91,37 +102,31 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                   </BS.Card>
                 </BS.Col>
                 <BS.Col lg={3}>
-                  <BS.Card className={"saldo-conta"}>
-                    <BS.Card.Body>
-                      <BS.Card.Title>Saldo Conta</BS.Card.Title>
-                      <BS.Card.Text>
-                        <strong>15,00€</strong>
-                        <p>Ativobank</p>
-                      </BS.Card.Text>
-                    </BS.Card.Body>
-                  </BS.Card>
+                  <Carousel className={"saldo-conta"}>
+                    <Carousel.Item>
+                      <h5>Saldo Conta</h5>
+                      <h5>15,00€</h5>
+                      <p>AtivoBank</p>
+                    </Carousel.Item>
+                  </Carousel>
                 </BS.Col>
                 <BS.Col lg={3}>
-                  <BS.Card className={"saldo-despesa"}>
-                    <BS.Card.Body>
-                      <BS.Card.Title>Receita Mensal</BS.Card.Title>
-                      <BS.Card.Text>
-                        <strong>4,00€</strong>
-                        <p>novembro 2020</p>
-                      </BS.Card.Text>
-                    </BS.Card.Body>
-                  </BS.Card>
+                  <Carousel className={"saldo-receita"}>
+                    <Carousel.Item>
+                      <h5>Receita Mensal</h5>
+                      <h5>4,00€</h5>
+                      <p>novembro 2020</p>
+                    </Carousel.Item>
+                  </Carousel>
                 </BS.Col>
                 <BS.Col lg={3}>
-                  <BS.Card className={"saldo-receita"}>
-                    <BS.Card.Body>
-                      <BS.Card.Title>Despesa Mensal</BS.Card.Title>
-                      <BS.Card.Text>
-                        <strong>56,00€</strong>
-                        <p>novembro 2020</p>
-                      </BS.Card.Text>
-                    </BS.Card.Body>
-                  </BS.Card>
+                  <Carousel className={"saldo-despesa"}>
+                    <Carousel.Item>
+                      <h5>Despesa Mensal</h5>
+                      <h5>56,00€</h5>
+                      <p>novembro 2020</p>
+                    </Carousel.Item>
+                  </Carousel>
                 </BS.Col>
               </BS.Row>
               <BS.Row className={"mt-2"}>

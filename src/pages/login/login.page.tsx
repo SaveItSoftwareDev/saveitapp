@@ -87,12 +87,22 @@ export const LoginPage: React.FC<ILoginPageProps> = (props) => {
 
                     <BS.Row>
                       <BS.Col lg={6}>
-                        <BS.Button type="submit" className="w-100 botao-entrar">
+                        <BS.Button
+                          variant="secondary"
+                          type="submit"
+                          className="w-100 botao-entrar"
+                        >
                           entrar
                         </BS.Button>
                       </BS.Col>
                       <BS.Col lg={6}>
-                        <BS.Button className="w-100 botao-registo">
+                        <BS.Button
+                          variant="link"
+                          className="w-100 botao-registo"
+                          onClick={() => {
+                            history.push("/register");
+                          }}
+                        >
                           Novo registo
                         </BS.Button>
                       </BS.Col>

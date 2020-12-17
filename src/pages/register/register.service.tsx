@@ -6,20 +6,31 @@ import axios from "axios";
 // }
 
 export interface IRegisterData {
-  firtsName: string;
-  lastName: string;
+  primeiro_nome: string;
+  ultimo_nome: string;
   email: string;
-  password: string;
-  age?: number;
-  gender?: string;
-  city?: string;
-  job?: string;
+  //  password: string;
+  idade?: number;
+  //  genero?: string;
+  cidade?: string;
+  profissao?: string;
 }
 
+const headers = { "Content-Type": "application/json" };
+
 export const SERVICE = {
+  routes: {
+    perfis: "perfis",
+  },
   methods: {
     doRegister: (data: IRegisterData) => {
-      return axios.post("localhost:3000/register", data);
+      return axios.post(
+        `http://127.0.0.1:8000/${SERVICE.routes.perfis}/`,
+        data,
+        {
+          headers,
+        }
+      );
     },
   },
 };

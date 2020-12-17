@@ -26,6 +26,12 @@ export const PageContainer = styled.div`
     text-align: center;
   }
 
+  .carousel {
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+  }
+
   .saldo-total {
     background-color: #2f18ad;
     color: #fff;

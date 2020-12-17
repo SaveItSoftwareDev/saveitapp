@@ -24,8 +24,6 @@ export const PageContainer = styled.div`
   }
 
   .botao-salvar {
-    background-color: #585858;
-    border-color: #585858;
     font-weight: 600;
   }
 

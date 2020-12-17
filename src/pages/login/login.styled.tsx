@@ -14,15 +14,10 @@ export const PageContainer = styled.div`
   }
 
   .botao-entrar {
-    background-color: #585858;
-    border-color: #585858;
     font-weight: 600;
   }
 
   .botao-registo {
-    background-color: transparent;
-    border-color: transparent;
-    color: blue;
     font-size: 14px;
     text-decoration: underline;
   }

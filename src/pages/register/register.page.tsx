@@ -10,25 +10,25 @@ import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 
 const schema = yup.object({
-  firstName: yup.string().trim().required().min(2).max(30),
-  lastName: yup.string().trim().required().min(2).max(30),
+  primeiro_nome: yup.string().trim().required().min(2).max(30),
+  ultimo_nome: yup.string().trim().required().min(2).max(30),
   email: yup.string().trim().required(),
-  password: yup.string().trim().required().min(5),
-  age: yup.number().min(2),
-  gender: yup.string().min(1).max(30),
-  city: yup.string().min(2).max(50),
-  job: yup.string().min(2).max(30),
+  // password: yup.string().trim().required().min(5),
+  idade: yup.number().min(2),
+  //genero: yup.string().min(1).max(30),
+  cidade: yup.string().min(2).max(50),
+  profissao: yup.string().min(2).max(30),
 });
 
 const initialValues: IRegisterData = {
-  firtsName: "",
-  lastName: "",
+  primeiro_nome: "",
+  ultimo_nome: "",
   email: "",
-  password: "",
-  age: undefined,
-  gender: "",
-  city: "",
-  job: "",
+  //password: "",
+  idade: undefined,
+  //genero: "",
+  cidade: "",
+  profissao: "",
 };
 
 interface IRegisterPageProps {}
@@ -93,24 +93,28 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
                             <BS.Form.Control
                               className="italico"
                               type="text"
-                              name="firstName"
+                              name="primeiro_nome"
                               placeholder="primeiro nome"
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              value={values.firtsName}
-                              isValid={touched.firtsName && !errors.firtsName}
+                              value={values.primeiro_nome}
+                              isValid={
+                                touched.primeiro_nome && !errors.primeiro_nome
+                              }
                             />
                           </BS.Form.Group>
                           <BS.Form.Group>
                             <BS.Form.Control
                               className="italico"
                               type="text"
-                              name="lastName"
+                              name="ultimo_nome"
                               placeholder="último nome"
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              value={values.lastName}
-                              isValid={touched.lastName && !errors.lastName}
+                              value={values.ultimo_nome}
+                              isValid={
+                                touched.ultimo_nome && !errors.ultimo_nome
+                              }
                             />
                           </BS.Form.Group>
                           <BS.Form.Group>
@@ -126,7 +130,7 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
                             />
                           </BS.Form.Group>
 
-                          <BS.Form.Group>
+                          {/* <BS.Form.Group>
                             <BS.Form.Control
                               className="italico"
                               type="password"
@@ -137,43 +141,43 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
                               value={values.password}
                               isValid={touched.password && !errors.password}
                             />
-                          </BS.Form.Group>
+                          </BS.Form.Group> */}
 
                           <BS.Form.Group>
                             <BS.Form.Control
                               className="italico"
                               type="number"
-                              name="age"
+                              name="idade"
                               placeholder="idade"
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              value={values.age}
-                              isValid={touched.age && !errors.age}
+                              value={values.idade}
+                              isValid={touched.idade && !errors.idade}
                             />
                           </BS.Form.Group>
 
-                          <BS.Form.Group>
+                          {/* <BS.Form.Group>
                             <BS.Form.Control
                               className="italico"
                               type="text"
-                              name="gender"
+                              name="genero"
                               placeholder="género"
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              value={values.gender}
-                              isValid={touched.gender && !errors.gender}
+                              value={values.genero}
+                              isValid={touched.genero && !errors.genero}
                             />
-                          </BS.Form.Group>
+                          </BS.Form.Group> */}
                           <BS.Form.Group>
                             <BS.Form.Control
                               className="italico"
                               type="text"
-                              name="city"
+                              name="cidade"
                               placeholder="cidade"
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              value={values.city}
-                              isValid={touched.city && !errors.city}
+                              value={values.cidade}
+                              isValid={touched.cidade && !errors.cidade}
                             />
                           </BS.Form.Group>
 
@@ -181,12 +185,12 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
                             <BS.Form.Control
                               className="italico"
                               type="text"
-                              name="job"
+                              name="profissao"
                               placeholder="profissão"
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              value={values.job}
-                              isValid={touched.job && !errors.job}
+                              value={values.profissao}
+                              isValid={touched.profissao && !errors.profissao}
                             />
                           </BS.Form.Group>
                         </BS.Col>
@@ -195,6 +199,7 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
                       <BS.Row>
                         <BS.Col lg={3} className="alinhamento-direita">
                           <BS.Button
+                            variant="secondary"
                             type="submit"
                             className="w-100 botao-salvar"
                           >
