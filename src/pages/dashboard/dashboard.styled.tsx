@@ -51,4 +51,26 @@ export const PageContainer = styled.div`
     background-color: #148805;
     color: #fff;
   }
+
+  .fundo-cizento {
+    background-color: #3b3b3b;
+    border-color: #3b3b3b;
+  }
+
+  .add-button {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    .btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 36px;
+      line-height: 0px;
+      padding-top: 0px;
+      &::after {
+        display: none;
+      }
+    }
+  }
 `;

@@ -4,7 +4,8 @@ import * as S from "./dashboard.styled";
 import * as BS from "react-bootstrap";
 import { Doughnut } from "react-chartjs-2";
 
-import Carousel from "react-bootstrap/Carousel";
+import ModalRegisto from "./components/modal-registo.component";
+
 import { useHistory } from "react-router-dom";
 
 interface IDashboarPageProps {}
@@ -34,13 +35,31 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
     ],
   };
 
+  const [showModalReceita, setShouModalReceita] = React.useState<boolean>(
+    false
+  );
+
+  const renderModalReceita = () => {
+    return (
+      <ModalRegisto
+        show={showModalReceita}
+        onHide={setShouModalReceita}
+      ></ModalRegisto>
+    );
+  };
+
   return (
     <S.PageContainer>
       <BS.Container fluid className="h-100">
         <BS.Row className="h-100">
           <BS.Col lg={2} className="sidebar">
             <BS.Container>
-              <BS.Row className="branco">
+              <BS.Row
+                className="branco"
+                onClick={() => {
+                  history.push("/dashboard");
+                }}
+              >
                 <h1 className="w-100">Save iT</h1>
               </BS.Row>
               <BS.Row className="mt-2">
@@ -59,33 +78,43 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
               </BS.Row>
               <BS.Row className="mt-2">
                 <BS.Col lg={12}>
-                  <p className="branco">Planeamentos</p>
+                  <BS.Button variant="secondary" className="fundo-cizento">
+                    Planeamentos
+                  </BS.Button>
                 </BS.Col>
               </BS.Row>
               <BS.Row className="mt-2">
                 <BS.Col lg={12}>
-                  <p className="branco">Investimentos</p>
+                  <BS.Button variant="secondary" className="fundo-cizento">
+                    Investimentos
+                  </BS.Button>
                 </BS.Col>
               </BS.Row>
               <BS.Row className="mt-2">
                 <BS.Col lg={12}>
-                  <p className="branco">Alertas</p>
+                  <BS.Button variant="secondary" className="fundo-cizento">
+                    Alertas
+                  </BS.Button>
                 </BS.Col>
               </BS.Row>
               <BS.Row className="mt-2">
                 <BS.Col lg={12}>
-                  <p className="branco">Definições</p>
+                  <BS.Button variant="secondary" className="fundo-cizento">
+                    Definições
+                  </BS.Button>
                 </BS.Col>
               </BS.Row>
               <BS.Row className="mt-2">
-                <BS.Col
-                  className="text-center"
-                  lg={12}
-                  onClick={() => {
-                    history.push("/login");
-                  }}
-                >
-                  <p className="branco">Sair</p>
+                <BS.Col lg={12}>
+                  <BS.Button
+                    variant="secondary"
+                    className="fundo-cizento"
+                    onClick={() => {
+                      history.push("/login");
+                    }}
+                  >
+                    Sair
+                  </BS.Button>
                 </BS.Col>
               </BS.Row>
             </BS.Container>
@@ -102,31 +131,31 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                   </BS.Card>
                 </BS.Col>
                 <BS.Col lg={3}>
-                  <Carousel className={"saldo-conta"}>
-                    <Carousel.Item>
+                  <BS.Carousel className={"saldo-conta"} indicators={false}>
+                    <BS.Carousel.Item>
                       <h5>Saldo Conta</h5>
                       <h5>15,00€</h5>
                       <p>AtivoBank</p>
-                    </Carousel.Item>
-                  </Carousel>
+                    </BS.Carousel.Item>
+                  </BS.Carousel>
                 </BS.Col>
                 <BS.Col lg={3}>
-                  <Carousel className={"saldo-receita"}>
-                    <Carousel.Item>
+                  <BS.Carousel className={"saldo-receita"} indicators={false}>
+                    <BS.Carousel.Item>
                       <h5>Receita Mensal</h5>
                       <h5>4,00€</h5>
                       <p>novembro 2020</p>
-                    </Carousel.Item>
-                  </Carousel>
+                    </BS.Carousel.Item>
+                  </BS.Carousel>
                 </BS.Col>
                 <BS.Col lg={3}>
-                  <Carousel className={"saldo-despesa"}>
-                    <Carousel.Item>
+                  <BS.Carousel className={"saldo-despesa"} indicators={false}>
+                    <BS.Carousel.Item>
                       <h5>Despesa Mensal</h5>
                       <h5>56,00€</h5>
                       <p>novembro 2020</p>
-                    </Carousel.Item>
-                  </Carousel>
+                    </BS.Carousel.Item>
+                  </BS.Carousel>
                 </BS.Col>
               </BS.Row>
               <BS.Row className={"mt-2"}>
@@ -162,6 +191,24 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
           </BS.Col>
         </BS.Row>
       </BS.Container>
+      <BS.DropdownButton
+        id="dropdown-basic-button"
+        title="+"
+        drop={"up"}
+        className="add-button"
+      >
+        <BS.Dropdown.Item
+          onClick={() => {
+            setShouModalReceita(!showModalReceita);
+          }}
+        >
+          Receita
+        </BS.Dropdown.Item>
+        <BS.Dropdown.Item href="#/action-2">Despesa</BS.Dropdown.Item>
+        <BS.Dropdown.Item href="#/action-3">Conta</BS.Dropdown.Item>
+        <BS.Dropdown.Item href="#/action-4">Categoria</BS.Dropdown.Item>
+      </BS.DropdownButton>
+      {renderModalReceita()}
     </S.PageContainer>
   );
 };

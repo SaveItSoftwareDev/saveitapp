@@ -23,13 +23,8 @@ export const PageContainer = styled.div`
     border-radius: 50% !important;
   }
 
-  .botao-salvar {
+  .negrito {
     font-weight: 600;
-  }
-
-  .alinhamento-direita {
-    display: flex;
-    justify-content: flex-end;
   }
 
   .italico {

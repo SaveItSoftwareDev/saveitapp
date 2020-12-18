@@ -41,7 +41,12 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
         <BS.Row className="h-100">
           <BS.Col lg={2} className="sidebar">
             <BS.Container>
-              <BS.Row className="branco">
+              <BS.Row
+                className="branco"
+                onClick={() => {
+                  history.push("/login");
+                }}
+              >
                 <h1>Save iT</h1>
               </BS.Row>
               <BS.Row className="mt-2">
@@ -196,14 +201,26 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
                         </BS.Col>
                       </BS.Row>
 
-                      <BS.Row>
-                        <BS.Col lg={3} className="alinhamento-direita">
+                      <BS.Row className="justify-content-between">
+                        <BS.Col lg={3}>
                           <BS.Button
                             variant="secondary"
                             type="submit"
-                            className="w-100 botao-salvar"
+                            className="w-100 negrito"
                           >
                             salvar
+                          </BS.Button>
+                        </BS.Col>
+                        <BS.Col lg={3}>
+                          <BS.Button
+                            variant="outline-secondary"
+                            type="submit"
+                            className="w-100 negrito"
+                            onClick={() => {
+                              history.push("/login");
+                            }}
+                          >
+                            voltar
                           </BS.Button>
                         </BS.Col>
                       </BS.Row>
