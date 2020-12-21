@@ -8,6 +8,10 @@ import { useHistory } from "react-router-dom";
 
 import { Formik } from "formik";
 
+import useFetchCategorias, {
+  ICategoria,
+} from "../fetchers/useFetchCategorias.hook";
+
 interface IModalRegistoProps {
   show: boolean;
   onHide: (show: boolean) => void;
@@ -37,6 +41,12 @@ const initialValues: IRegistoData = {
 
 export const ModalRegisto = (props: IModalRegistoProps) => {
   const history = useHistory();
+  const [
+    categoriasData,
+    errorCategorias,
+    isLoadingCategorias,
+  ] = useFetchCategorias();
+
   return (
     <BS.Modal
       show={props.show}
@@ -99,12 +109,15 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
                       onBlur={handleBlur}
                       value={values.categoria}
                       isValid={touched.categoria && !errors.categoria}
-                      defaultValue="categoria"
+                      disabled={isLoadingCategorias}
                     >
-                      <option>categoria</option>
-                      <option>Alimentação</option>
-                      <option>Ensino</option>
-                      <option>Carro</option>
+                      {isLoadingCategorias ? (
+                        <option>Loading...</option>
+                      ) : (
+                        categoriasData.map((categoria: ICategoria) => (
+                          <option>{categoria.nome}</option>
+                        ))
+                      )}
                     </BS.Form.Control>
                   </BS.Form.Group>
                   <BS.Form.Group>

@@ -14,6 +14,7 @@ const headers = { "Content-Type": "application/json" };
 export const SERVICE = {
   routes: {
     perfis: "perfis",
+    categorias: "categorias",
   },
   methods: {
     getSaldoTotal: () => {
@@ -25,6 +26,10 @@ export const SERVICE = {
           });
         }, 2000);
       });
+    },
+
+    getCategorias: () => {
+      return axios.get(`http://127.0.0.1:8000/${SERVICE.routes.categorias}/`);
     },
 
     doRegister: (data: IRegistoData) => {
