@@ -8,10 +8,14 @@ import ModalRegisto from "./components/modal-registo.component";
 
 import { useHistory } from "react-router-dom";
 
+import useFetchSaldoTotal from "./fetchers/useFetchSaldoTotal.hook";
+
 interface IDashboarPageProps {}
 
 export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
   const history = useHistory();
+
+  const [response, error, isLoading] = useFetchSaldoTotal();
 
   const dataDespesa = {
     labels: ["Supermercado", "Cinema", "Ginásio"],
@@ -126,7 +130,11 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                   <BS.Card className={"saldo-total"}>
                     <BS.Card.Body>
                       <BS.Card.Title>Saldo Total</BS.Card.Title>
-                      <BS.Card.Text>1.024,00€</BS.Card.Text>
+                      <BS.Card.Text>
+                        {isLoading
+                          ? "loading..."
+                          : `${response.saldoTotal} ${response.currency}`}
+                      </BS.Card.Text>
                     </BS.Card.Body>
                   </BS.Card>
                 </BS.Col>

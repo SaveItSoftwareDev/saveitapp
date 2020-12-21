@@ -16,6 +16,17 @@ export const SERVICE = {
     perfis: "perfis",
   },
   methods: {
+    getSaldoTotal: () => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve({
+            saldoTotal: 13464.23,
+            currency: "€",
+          });
+        }, 2000);
+      });
+    },
+
     doRegister: (data: IRegistoData) => {
       return axios.post(
         `http://127.0.0.1:8000/${SERVICE.routes.perfis}/`,
