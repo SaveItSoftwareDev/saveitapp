@@ -12,6 +12,8 @@ import useFetchCategorias, {
   ICategoria,
 } from "../fetchers/useFetchCategorias.hook";
 
+import useFetchSubCategoria from "../fetchers/useFetchSubCategorias.hook";
+
 interface IModalRegistoProps {
   show: boolean;
   onHide: (show: boolean) => void;
@@ -46,6 +48,11 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
     errorCategorias,
     isLoadingCategorias,
   ] = useFetchCategorias();
+  const [
+    subcategoriasData,
+    errorSubcategorias,
+    isLoadingSubcategorias,
+  ] = useFetchSubCategoria();
 
   return (
     <BS.Modal
@@ -130,9 +137,15 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
                       onBlur={handleBlur}
                       value={values.subcategoria}
                       isValid={touched.subcategoria && !errors.subcategoria}
-                      defaultValue="subcategoria"
+                      disabled={isLoadingCategorias}
                     >
-                      <option>subcategoria</option>
+                      {isLoadingSubcategorias ? (
+                        <option>Loading...</option>
+                      ) : (
+                        subcategoriasData.map((subcategoria: ICategoria) => (
+                          <option>{subcategoria.nome}</option>
+                        ))
+                      )}
                     </BS.Form.Control>
                   </BS.Form.Group>
 
