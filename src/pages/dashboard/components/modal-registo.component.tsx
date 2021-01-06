@@ -2,7 +2,7 @@ import * as React from "react";
 import * as BS from "react-bootstrap";
 import * as yup from "yup";
 
-import { IRegistoData, SERVICE } from "../dashboard.service";
+import { IMovimentoData, SERVICE } from "../dashboard.service";
 
 import { useHistory } from "react-router-dom";
 
@@ -12,7 +12,11 @@ import useFetchCategorias, {
   ICategoria,
 } from "../fetchers/useFetchCategorias.hook";
 
-import useFetchSubCategoria from "../fetchers/useFetchSubCategorias.hook";
+import useFetchSubCategoria, {
+  ISubCategoria,
+} from "../fetchers/useFetchSubCategorias.hook";
+
+import useFetchContas, { IConta } from "../fetchers/useFetchContas.hook";
 
 interface IModalRegistoProps {
   show: boolean;
@@ -20,7 +24,7 @@ interface IModalRegistoProps {
 }
 
 const schema = yup.object({
-  descricao: yup.string().trim().required().min(2).max(100),
+  descricao: yup.string().trim().required().min(1).max(30),
   categoria: yup
     .string()
     .oneOf(["Alimentação", "Ensino", "Carro"])
@@ -28,17 +32,19 @@ const schema = yup.object({
     .required(),
   subcategoria: yup.string().min(2).max(100),
   montante: yup.number().required().min(0.1).max(10000),
-  data: yup.date().required(),
-  recorrencia: yup.string().trim().oneOf(["Mensal", "Anual"]),
+  data: yup.string().required(),
+  // recorrencia: yup.string().trim().oneOf(["Mensal", "Anual"]),
+  conta: yup.string().trim().oneOf(["Carteira", "CGD"]).required(),
 });
 
-const initialValues: IRegistoData = {
+const initialValues: IMovimentoData = {
   descricao: "",
   categoria: "",
   subcategoria: "",
   montante: 0,
   data: new Date().toDateString(),
-  recorrencia: "",
+  //recorrencia: "",
+  conta: "",
 };
 
 export const ModalRegisto = (props: IModalRegistoProps) => {
@@ -53,6 +59,7 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
     errorSubcategorias,
     isLoadingSubcategorias,
   ] = useFetchSubCategoria();
+  const [contasData, errorContas, isLoadingContas] = useFetchContas();
 
   return (
     <BS.Modal
@@ -69,12 +76,12 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
       <BS.Modal.Body>
         <Formik
           validationSchema={schema}
-          onSubmit={(values: IRegistoData) => {
+          onSubmit={(values: IMovimentoData) => {
             SERVICE.methods
-              .doRegister(values)
+              .createReceita(values)
               .then((result) => {
                 console.log(
-                  "REGISTO COM SUCESSO! -> Redirecionar para DASHBOARD"
+                  "RECEITA COM SUCESSO! -> Redirecionar para DASHBOARD"
                 );
                 props.onHide(false);
               })
@@ -142,7 +149,7 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
                       {isLoadingSubcategorias ? (
                         <option>Loading...</option>
                       ) : (
-                        subcategoriasData.map((subcategoria: ICategoria) => (
+                        subcategoriasData.map((subcategoria: ISubCategoria) => (
                           <option>{subcategoria.nome}</option>
                         ))
                       )}
@@ -178,7 +185,7 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
                     />
                   </BS.Form.Group>
 
-                  <BS.Form.Group>
+                  {/* <BS.Form.Group>
                     <BS.Form.Control
                       className="italico"
                       as="select"
@@ -194,6 +201,27 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
                       <option>Mensal</option>
                       <option>Anual</option>
                     </BS.Form.Control>
+                  </BS.Form.Group> */}
+                  <BS.Form.Group>
+                    <BS.Form.Control
+                      className="italico"
+                      as="select"
+                      name="conta"
+                      placeholder="conta"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.conta}
+                      isValid={touched.conta && !errors.conta}
+                      disabled={isLoadingContas}
+                    >
+                      {isLoadingContas ? (
+                        <option>Loading...</option>
+                      ) : (
+                        contasData.map((conta: IConta) => (
+                          <option>{conta.nome}</option>
+                        ))
+                      )}
+                    </BS.Form.Control>
                   </BS.Form.Group>
                 </BS.Col>
               </BS.Row>
@@ -204,6 +232,9 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
                     variant="secondary"
                     type="submit"
                     className="w-100 negrito"
+                    /* onClick={() => {
+                      props.onHide(false);
+                    }} */
                   >
                     salvar
                   </BS.Button>

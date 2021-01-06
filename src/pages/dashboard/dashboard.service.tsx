@@ -1,12 +1,13 @@
 import axios from "axios";
 
-export interface IRegistoData {
+export interface IMovimentoData {
   descricao: string;
   categoria: string;
   subcategoria?: string;
   montante: number;
   data: string;
   recorrencia?: string;
+  conta: string;
 }
 
 const headers = { "Content-Type": "application/json" };
@@ -16,6 +17,8 @@ export const SERVICE = {
     perfis: "perfis",
     categorias: "categorias",
     subcategorias: "sub_categorias",
+    registo: "registo",
+    contas: "contas",
   },
   methods: {
     getSaldoTotal: () => {
@@ -39,9 +42,13 @@ export const SERVICE = {
       );
     },
 
-    doRegister: (data: IRegistoData) => {
+    getContas: () => {
+      return axios.get(`http://127.0.0.1:8000/${SERVICE.routes.contas}/`);
+    },
+
+    createReceita: (data: IMovimentoData) => {
       return axios.post(
-        `http://127.0.0.1:8000/${SERVICE.routes.perfis}/`,
+        `http://127.0.0.1:8000/${SERVICE.routes.registo}/`,
         data,
         {
           headers,

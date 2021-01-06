@@ -2,7 +2,9 @@ import * as React from "react";
 import { SERVICE } from "../dashboard.service";
 
 export interface ICategoria {
+  id: number;
   nome: string;
+  id_utilizador_id: number;
 }
 
 export const useFetchCategorias = (): [

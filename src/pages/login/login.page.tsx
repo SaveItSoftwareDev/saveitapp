@@ -10,7 +10,7 @@ import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 
 const schema = yup.object({
-  email: yup.string().required(),
+  email: yup.string().required().max(35).min(1),
   password: yup.string().required().min(5),
 });
 

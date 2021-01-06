@@ -10,14 +10,14 @@ import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 
 const schema = yup.object({
-  primeiro_nome: yup.string().trim().required().min(2).max(30),
-  ultimo_nome: yup.string().trim().required().min(2).max(30),
-  email: yup.string().trim().required(),
+  primeiro_nome: yup.string().trim().required().min(1).max(20),
+  ultimo_nome: yup.string().trim().required().min(1).max(20),
+  email: yup.string().trim().required().max(35).min(1),
   // password: yup.string().trim().required().min(5),
   idade: yup.number().min(2),
   //genero: yup.string().min(1).max(30),
-  cidade: yup.string().min(2).max(50),
-  profissao: yup.string().min(2).max(30),
+  cidade: yup.string().min(2).max(20),
+  profissao: yup.string().min(2).max(20),
 });
 
 const initialValues: IRegisterData = {

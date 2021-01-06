@@ -1,26 +1,26 @@
 import * as React from "react";
 import { SERVICE } from "../dashboard.service";
 
-export interface ISubCategoria {
-  id: number;
+export interface IConta {
+  id_utilizador: number;
   nome: string;
-  id_categoria_id: number;
-  id_utilizador_id: number;
+  saldo: string;
+  tipo: string;
 }
 
-export const useFetchSubCategorias = (): [
-  data: ISubCategoria[],
+export const useFetchContas = (): [
+  data: IConta[],
   error: any,
   isLoadig: boolean
 ] => {
-  const [response, setResponse] = React.useState<ISubCategoria[]>([]);
+  const [response, setResponse] = React.useState<IConta[]>([]);
   const [error, setError] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
     const fetchData = () => {
       try {
-        SERVICE.methods.getSubCategorias().then((r) => {
+        SERVICE.methods.getContas().then((r) => {
           setResponse(r.data);
           setIsLoading(false);
         });
@@ -33,4 +33,4 @@ export const useFetchSubCategorias = (): [
   return [response, error, isLoading];
 };
 
-export default useFetchSubCategorias;
+export default useFetchContas;
