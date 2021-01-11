@@ -2,6 +2,7 @@ import * as React from "react";
 import { SERVICE } from "../dashboard.service";
 
 export interface IConta {
+  id_conta: number;
   id_utilizador: number;
   nome: string;
   saldo: string;

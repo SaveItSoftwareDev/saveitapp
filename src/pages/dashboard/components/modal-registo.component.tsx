@@ -24,27 +24,28 @@ interface IModalRegistoProps {
 }
 
 const schema = yup.object({
+  id_utilizador: yup.number(),
   descricao: yup.string().trim().required().min(1).max(30),
-  categoria: yup
-    .string()
-    .oneOf(["Alimentação", "Ensino", "Carro"])
-    .trim()
-    .required(),
-  subcategoria: yup.string().min(2).max(100),
+  categoria: yup.number().required(),
+  sub_categoria: yup.number().min(2).max(100),
   montante: yup.number().required().min(0.1).max(10000),
   data: yup.string().required(),
   // recorrencia: yup.string().trim().oneOf(["Mensal", "Anual"]),
-  conta: yup.string().trim().oneOf(["Carteira", "CGD"]).required(),
+  id_conta: yup.number(),
+  tipo: yup.string().trim(),
 });
 
 const initialValues: IMovimentoData = {
+  //Quando houver sessão remover isto, o servidor deve identificar o user em sessão.
+  id_utilizador: 4,
   descricao: "",
-  categoria: "",
-  subcategoria: "",
+  categoria: -1,
+  sub_categoria: -1,
   montante: 0,
-  data: new Date().toDateString(),
+  data: "",
   //recorrencia: "",
-  conta: "",
+  id_conta: 4,
+  tipo: "receita",
 };
 
 export const ModalRegisto = (props: IModalRegistoProps) => {
@@ -77,6 +78,7 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
         <Formik
           validationSchema={schema}
           onSubmit={(values: IMovimentoData) => {
+            debugger;
             SERVICE.methods
               .createReceita(values)
               .then((result) => {
@@ -99,6 +101,7 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
             errors,
           }) => (
             <BS.Form noValidate onSubmit={handleSubmit} className="w-100">
+              {/* <div>{JSON.stringify(errors)}</div> */}
               <BS.Row>
                 <BS.Col>
                   <BS.Form.Group>
@@ -138,12 +141,12 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
                     <BS.Form.Control
                       className="italico"
                       as="select"
-                      name="subcategoria"
+                      name="sub_categoria"
                       placeholder="subcategoria"
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      value={values.subcategoria}
-                      isValid={touched.subcategoria && !errors.subcategoria}
+                      value={values.sub_categoria}
+                      isValid={touched.sub_categoria && !errors.sub_categoria}
                       disabled={isLoadingCategorias}
                     >
                       {isLoadingSubcategorias ? (
@@ -206,19 +209,19 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
                     <BS.Form.Control
                       className="italico"
                       as="select"
-                      name="conta"
+                      name="id_conta"
                       placeholder="conta"
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      value={values.conta}
-                      isValid={touched.conta && !errors.conta}
+                      value={values.id_conta}
+                      isValid={touched.id_conta && !errors.id_conta}
                       disabled={isLoadingContas}
                     >
                       {isLoadingContas ? (
                         <option>Loading...</option>
                       ) : (
                         contasData.map((conta: IConta) => (
-                          <option>{conta.nome}</option>
+                          <option value={conta.id_conta}>{conta.nome}</option>
                         ))
                       )}
                     </BS.Form.Control>

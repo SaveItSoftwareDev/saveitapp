@@ -1,13 +1,15 @@
 import axios from "axios";
 
 export interface IMovimentoData {
+  id_utilizador: number;
   descricao: string;
-  categoria: string;
-  subcategoria?: string;
+  categoria: number;
+  sub_categoria?: number;
   montante: number;
   data: string;
   recorrencia?: string;
-  conta: string;
+  id_conta: number;
+  tipo: string;
 }
 
 const headers = { "Content-Type": "application/json" };
