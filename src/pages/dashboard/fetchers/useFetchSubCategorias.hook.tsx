@@ -2,10 +2,10 @@ import * as React from "react";
 import { SERVICE } from "../dashboard.service";
 
 export interface ISubCategoria {
-  id: number;
+  //id: number;
   nome: string;
-  id_categoria_id: number;
-  id_utilizador_id: number;
+  id_categoria: number;
+  id_utilizador: number;
 }
 
 export const useFetchSubCategorias = (): [
