@@ -9,6 +9,7 @@ import ModalRegisto from "./components/modal-registo.component";
 import { useHistory } from "react-router-dom";
 
 import useFetchSaldoTotal from "./fetchers/useFetchSaldoTotal.hook";
+import useFetchMovimentos from "./fetchers/useFetchMovimentos.hook";
 
 interface IDashboarPageProps {}
 
@@ -16,6 +17,12 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
   const history = useHistory();
 
   const [response, error, isLoading] = useFetchSaldoTotal();
+
+  const [
+    movimentos,
+    errorMovimentos,
+    isLoadingMovimentos,
+  ] = useFetchMovimentos();
 
   const dataDespesa = {
     labels: ["Supermercado", "Cinema", "Ginásio"],
@@ -174,7 +181,34 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                 </BS.Col>
               </BS.Row>
               <BS.Row className={"mt-2"}>
-                <BS.Col lg="8"></BS.Col>
+                <BS.Col lg="8">
+                  <BS.Container className="mt-2">
+                    <BS.Table>
+                      <thead>
+                        <tr>
+                          <th>Data</th>
+                          <th>Conta</th>
+                          <th>Categoria</th>
+                          <th>Subcategoria</th>
+                          <th>Valor</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {movimentos.map((mov) => {
+                          return (
+                            <tr>
+                              <td>{mov.data}</td>
+                              <td>{mov.id_conta}</td>
+                              <td>{mov.categoria}</td>
+                              <td>{mov.sub_categoria}</td>
+                              <td>{mov.montante}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </BS.Table>
+                  </BS.Container>
+                </BS.Col>
                 <BS.Col lg="4">
                   <BS.Row>
                     <BS.Col lg="12">

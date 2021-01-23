@@ -26,8 +26,8 @@ interface IModalRegistoProps {
 const schema = yup.object({
   id_utilizador: yup.number(),
   descricao: yup.string().trim().required().min(1).max(30),
-  categoria: yup.number().required(),
-  sub_categoria: yup.number().min(2).max(100),
+  categoria: yup.number().required().notOneOf([-1]),
+  sub_categoria: yup.number().notOneOf([-1]),
   montante: yup.number().required().min(0.1).max(10000),
   data: yup.string().required(),
   // recorrencia: yup.string().trim().oneOf(["Mensal", "Anual"]),
@@ -101,7 +101,7 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
             errors,
           }) => (
             <BS.Form noValidate onSubmit={handleSubmit} className="w-100">
-              {/* <div>{JSON.stringify(errors)}</div> */}
+              {<div>{JSON.stringify(errors)}</div>}
               <BS.Row>
                 <BS.Col>
                   <BS.Form.Group>
@@ -155,7 +155,9 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
                         <option>Loading...</option>
                       ) : (
                         subcategoriasData.map((subcategoria: ISubCategoria) => (
-                          <option>{subcategoria.nome}</option>
+                          <option value={subcategoria.id_categoria}>
+                            {subcategoria.nome}
+                          </option>
                         ))
                       )}
                     </BS.Form.Control>

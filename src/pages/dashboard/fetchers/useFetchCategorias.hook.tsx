@@ -4,7 +4,6 @@ import { SERVICE } from "../dashboard.service";
 export interface ICategoria {
   id_categoria: number;
   nome: string;
-  id_utilizador: number;
 }
 
 export const useFetchCategorias = (): [
@@ -12,7 +11,9 @@ export const useFetchCategorias = (): [
   error: any,
   isLoadig: boolean
 ] => {
-  const [response, setResponse] = React.useState<ICategoria[]>([]);
+  const [response, setResponse] = React.useState<ICategoria[]>([
+    { id_categoria: -1, nome: "Selecione..." },
+  ]);
   const [error, setError] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(true);
 
@@ -20,7 +21,7 @@ export const useFetchCategorias = (): [
     const fetchData = () => {
       try {
         SERVICE.methods.getCategorias().then((r) => {
-          setResponse(r.data);
+          setResponse([...response, ...r.data]);
           setIsLoading(false);
         });
       } catch (error) {

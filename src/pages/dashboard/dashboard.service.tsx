@@ -1,15 +1,15 @@
 import axios from "axios";
 
 export interface IMovimentoData {
+  id_conta: number;
   id_utilizador: number;
+  tipo: string;
   descricao: string;
   categoria: number;
-  sub_categoria?: number;
+  sub_categoria: number;
   montante: number;
   data: string;
   recorrencia?: string;
-  id_conta: number;
-  tipo: string;
 }
 
 const authToken = JSON.parse(localStorage.getItem("token") || "{}");
@@ -66,6 +66,11 @@ export const SERVICE = {
           headers,
         }
       );
+    },
+    getRegistos: () => {
+      return axios.get(`http://127.0.0.1:8000/${SERVICE.routes.registo}/`, {
+        headers,
+      });
     },
   },
 };
