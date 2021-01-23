@@ -82,11 +82,13 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
               </BS.Row>
               <BS.Row className="mt-2">
                 <BS.Col lg={12}>
-                  <BS.Button variant="secondary" className="fundo-cizento"
-                  onClick={() => {
+                  <BS.Button
+                    variant="secondary"
+                    className="fundo-cizento"
+                    onClick={() => {
                       history.push("/budget");
                     }}
-                    >
+                  >
                     Planeamentos
                   </BS.Button>
                 </BS.Col>
@@ -118,6 +120,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                     variant="secondary"
                     className="fundo-cizento"
                     onClick={() => {
+                      localStorage.removeItem("token");
                       history.push("/login");
                     }}
                   >
