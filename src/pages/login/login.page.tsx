@@ -10,12 +10,12 @@ import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 
 const schema = yup.object({
-  email: yup.string().required().max(35).min(1),
+  username: yup.string().required().max(35).min(1),
   password: yup.string().required().min(5),
 });
 
 const initialValues: ILoginData = {
-  email: "",
+  username: "",
   password: "",
 };
 interface ILoginPageProps {}
@@ -36,6 +36,10 @@ export const LoginPage: React.FC<ILoginPageProps> = (props) => {
                   SERVICE.methods
                     .doLogin(values)
                     .then((result) => {
+                      localStorage.setItem(
+                        "token",
+                        JSON.stringify(result.data)
+                      );
                       console.log(
                         "LOGIN COM SUCESSO! -> Redirecionar para DASHBOARD"
                       );
@@ -62,13 +66,13 @@ export const LoginPage: React.FC<ILoginPageProps> = (props) => {
                     <BS.Form.Group>
                       <BS.Form.Control
                         className="italico"
-                        type="email"
-                        name="email"
-                        placeholder="e-mail"
+                        type="text"
+                        name="username"
+                        placeholder="username"
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.email}
-                        isValid={touched.email && !errors.email}
+                        value={values.username}
+                        isValid={touched.username && !errors.username}
                       />
                     </BS.Form.Group>
 

@@ -132,7 +132,9 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
                         <option>Loading...</option>
                       ) : (
                         categoriasData.map((categoria: ICategoria) => (
-                          <option>{categoria.nome}</option>
+                          <option value={categoria.id_categoria}>
+                            {categoria.nome}
+                          </option>
                         ))
                       )}
                     </BS.Form.Control>

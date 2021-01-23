@@ -12,7 +12,12 @@ export interface IMovimentoData {
   tipo: string;
 }
 
-const headers = { "Content-Type": "application/json" };
+const authToken = JSON.parse(localStorage.getItem("token") || "{}");
+
+const headers = {
+  "Content-Type": "application/json",
+  Authorization: `Token ${authToken.auth_token} `,
+};
 
 export const SERVICE = {
   routes: {
@@ -35,17 +40,22 @@ export const SERVICE = {
     },
 
     getCategorias: () => {
-      return axios.get(`http://127.0.0.1:8000/${SERVICE.routes.categorias}/`);
+      return axios.get(`http://127.0.0.1:8000/${SERVICE.routes.categorias}/`, {
+        headers,
+      });
     },
 
     getSubCategorias: () => {
       return axios.get(
-        `http://127.0.0.1:8000/${SERVICE.routes.subcategorias}/`
+        `http://127.0.0.1:8000/${SERVICE.routes.subcategorias}/`,
+        { headers }
       );
     },
 
     getContas: () => {
-      return axios.get(`http://127.0.0.1:8000/${SERVICE.routes.contas}/`);
+      return axios.get(`http://127.0.0.1:8000/${SERVICE.routes.contas}/`, {
+        headers,
+      });
     },
 
     createReceita: (data: IMovimentoData) => {

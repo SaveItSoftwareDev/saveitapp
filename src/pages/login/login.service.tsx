@@ -1,14 +1,17 @@
 import axios from "axios";
 
 export interface ILoginData {
-  email: string;
+  username: string;
   password: string;
 }
 
 export const SERVICE = {
+  routes: {
+    login: "api/v1/token/login/",
+  },
   methods: {
     doLogin: (data: ILoginData) => {
-      return axios.post("localhost:3000/login", data);
+      return axios.post(`http://127.0.0.1:8000/${SERVICE.routes.login}`, data);
     },
   },
 };
