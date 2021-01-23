@@ -21,8 +21,10 @@ interface IModalOrcamentoProps {
   onHide: (show: boolean) => void;
 }
 
+
 const schema = yup.object({
 
+    id_planeamento: yup.number(),
     id_utilizador: yup.number(),
     categoria: yup.number(),
     sub_categoria: yup.number(),
@@ -31,11 +33,15 @@ const schema = yup.object({
   });
 
   const initialValues: IOrcamentoData = {
-    id_utilizador: 1,
-    categoria: -1,
-    sub_categoria: -1,
+
+    id_planeamento: 1,
+    id_utilizador: 0,
+    categoria: 0,
+    sub_categoria: 0,
     montante_limite: 0,
+    //prazo: "",
     //prazo: new Date().toDateString(),
+    
   };
 
   export const ModalRegisto = (props: IModalOrcamentoProps) => {
@@ -105,9 +111,8 @@ const schema = yup.object({
                           <option>Loading...</option>
                         ) : (
                           categoriasData.map((categoria: ICategoria) => (
-                            //Fica esta linha comentada enquanto a api não estiver formulada com os nomes concretos
-                            //<option value={categoria.id}>{categoria.nome}</option>
-                            <option> {categoria.nome}</option>
+                            <option value={categoria.id_categoria}>{categoria.nome}</option>
+                    
                           ))
                         )}
                       </BS.Form.Control>
@@ -128,8 +133,7 @@ const schema = yup.object({
                           <option>Loading...</option>
                         ) : (
                           subcategoriasData.map((subcategoria: ISubCategoria) => (
-                            //<option value={sub_categoria.id}>{sub_categoria.nome}</option>
-                            <option>{subcategoria.nome}</option>
+                            <option value={subcategoria.id_subcategoria}>{subcategoria.nome}</option>
                           ))
                         )}
                       </BS.Form.Control>
