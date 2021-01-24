@@ -2,7 +2,10 @@ import * as React from "react";
 import { SERVICE } from "../dashboard.service";
 
 export interface IMovimento {
-  categoria: number;
+  categoria: {
+    id_categoria: number;
+    nome: string;
+  };
   data: string;
   descricao: string;
   id_conta: number;
@@ -24,7 +27,6 @@ export const useFetchMovimentos = (): [
     const fetchData = () => {
       try {
         SERVICE.methods.getRegistos().then((r) => {
-          debugger;
           setResponse(r.data);
           setIsLoading(false);
         });

@@ -78,7 +78,6 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
         <Formik
           validationSchema={schema}
           onSubmit={(values: IMovimentoData) => {
-            debugger;
             SERVICE.methods
               .createReceita(values)
               .then((result) => {

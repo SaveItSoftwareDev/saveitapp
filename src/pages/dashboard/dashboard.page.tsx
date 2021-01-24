@@ -10,19 +10,20 @@ import { useHistory } from "react-router-dom";
 
 import useFetchSaldoTotal from "./fetchers/useFetchSaldoTotal.hook";
 import useFetchMovimentos from "./fetchers/useFetchMovimentos.hook";
+import useFetchContas from "./fetchers/useFetchContas.hook";
 
 interface IDashboarPageProps {}
 
 export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
   const history = useHistory();
 
-  const [response, error, isLoading] = useFetchSaldoTotal();
-
   const [
     movimentos,
     errorMovimentos,
     isLoadingMovimentos,
   ] = useFetchMovimentos();
+
+  const [contas, errorContas, isLoadingContas] = useFetchContas();
 
   const dataDespesa = {
     labels: ["Supermercado", "Cinema", "Ginásio"],
@@ -145,20 +146,26 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                     <BS.Card.Body>
                       <BS.Card.Title>Saldo Total</BS.Card.Title>
                       <BS.Card.Text>
-                        {isLoading
+                        {isLoadingContas
                           ? "loading..."
-                          : `${response.saldoTotal} ${response.currency}`}
+                          : contas
+                              .map((conta) => Number.parseFloat(conta.saldo))
+                              .reduce((acc, nextval) => acc + nextval)}
                       </BS.Card.Text>
                     </BS.Card.Body>
                   </BS.Card>
                 </BS.Col>
                 <BS.Col lg={3}>
                   <BS.Carousel className={"saldo-conta"} indicators={false}>
-                    <BS.Carousel.Item>
-                      <h5>Saldo Conta</h5>
-                      <h5>15,00€</h5>
-                      <p>AtivoBank</p>
-                    </BS.Carousel.Item>
+                    {contas.map((conta) => {
+                      return (
+                        <BS.Carousel.Item>
+                          <h5>Saldo Conta</h5>
+                          <h5>{`${conta.saldo} €`}</h5>
+                          <p>{conta.nome}</p>
+                        </BS.Carousel.Item>
+                      );
+                    })}
                   </BS.Carousel>
                 </BS.Col>
                 <BS.Col lg={3}>
@@ -199,7 +206,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                             <tr>
                               <td>{mov.data}</td>
                               <td>{mov.id_conta}</td>
-                              <td>{mov.categoria}</td>
+                              <td>{mov.categoria.nome}</td>
                               <td>{mov.sub_categoria}</td>
                               <td>{mov.montante}</td>
                             </tr>
