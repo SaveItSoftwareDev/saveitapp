@@ -154,7 +154,7 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
                         <option>Loading...</option>
                       ) : (
                         subcategoriasData.map((subcategoria: ISubCategoria) => (
-                          <option value={subcategoria.id_categoria}>
+                          <option value={subcategoria.id_subcategoria}>
                             {subcategoria.nome}
                           </option>
                         ))

@@ -148,7 +148,8 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                       <BS.Card.Text>
                         {isLoadingContas
                           ? "loading..."
-                          : contas
+                          : contas.length &&
+                            contas
                               .map((conta) => Number.parseFloat(conta.saldo))
                               .reduce((acc, nextval) => acc + nextval)}
                       </BS.Card.Text>
@@ -205,9 +206,9 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                           return (
                             <tr>
                               <td>{mov.data}</td>
-                              <td>{mov.id_conta}</td>
+                              <td>{mov.id_conta.nome}</td>
                               <td>{mov.categoria.nome}</td>
-                              <td>{mov.sub_categoria}</td>
+                              <td>{mov.sub_categoria.nome}</td>
                               <td>{mov.montante}</td>
                             </tr>
                           );

@@ -2,9 +2,9 @@ import * as React from "react";
 import { SERVICE } from "../dashboard.service";
 
 export interface ISubCategoria {
-  id_subcategoria: number;
+  id_categoria: { id_categoria: number; nome?: string };
   nome: string;
-  id_categoria: number;
+  id_subcategoria: number;
 }
 
 export const useFetchSubCategorias = (): [
@@ -13,7 +13,11 @@ export const useFetchSubCategorias = (): [
   isLoadig: boolean
 ] => {
   const [response, setResponse] = React.useState<ISubCategoria[]>([
-    { id_subcategoria: -1, id_categoria: -1, nome: "Selecione..." },
+    {
+      id_subcategoria: -1,
+      id_categoria: { id_categoria: -1 },
+      nome: "Selecione...",
+    },
   ]);
   const [error, setError] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(true);

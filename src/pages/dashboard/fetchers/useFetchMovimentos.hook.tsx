@@ -1,4 +1,5 @@
 import * as React from "react";
+import { string } from "yup/lib/locale";
 import { SERVICE } from "../dashboard.service";
 
 export interface IMovimento {
@@ -8,9 +9,21 @@ export interface IMovimento {
   };
   data: string;
   descricao: string;
-  id_conta: number;
+  id_conta: {
+    id_conta: number;
+    nome: string;
+    saldo: string;
+    tipo: string;
+  };
   montante: string;
-  sub_categoria: number;
+  sub_categoria: {
+    id_subcategoria: number;
+    id_categoria: {
+      id_categoria: number;
+      nome: string;
+    };
+    nome: string;
+  };
   tipo: string;
 }
 
