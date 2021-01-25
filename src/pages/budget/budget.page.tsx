@@ -121,10 +121,8 @@ import useFetchPlaneamentos from "./fetchers/useFetchPlaneamentos.hook";
                         {planeamentos.map((plan) => {
                           return (
                             <tr>
-                              <td>{plan.categoria.nome}</td>
-                              <td>{plan.sub_categoria.id_categoria.nome}</td>
                               <td>{plan.planeamento.montante_limite}</td>
-                              <td>{plan.prazo}</td>
+                              <td>{plan.planeamento.prazo}</td>
                             </tr>
                           );
                         })}

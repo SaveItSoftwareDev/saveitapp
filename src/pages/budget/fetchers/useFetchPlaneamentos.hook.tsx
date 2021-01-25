@@ -6,25 +6,11 @@ export interface IPlaneamento{
 
     planeamento:{
       id_planeamento: number;
-      montante_limite: string;
-    }
-    categoria: {
-        id_categoria: number;
-        nome: string;
-      };
+      montante_limite: string;  
 
-      sub_categoria: {
-        id_subcategoria: number;
-        id_categoria: {
-          id_categoria: number;
-          nome: string;
-        };
-      };
-      
       prazo: string;
-
-
-    }
+    };
+  }
 
 export const useFetchPlaneamentos = (): [
   data: IPlaneamento[],
