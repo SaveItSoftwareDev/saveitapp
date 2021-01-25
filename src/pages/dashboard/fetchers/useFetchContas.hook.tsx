@@ -9,12 +9,22 @@ export interface IConta {
   tipo: string;
 }
 
-export const useFetchContas = (): [
-  data: IConta[],
-  error: any,
-  isLoadig: boolean
-] => {
-  const [response, setResponse] = React.useState<IConta[]>([]);
+export const useFetchContas = (
+  addSelectOption?: boolean
+): [data: IConta[], error: any, isLoadig: boolean] => {
+  const [contas, setContas] = React.useState<IConta[]>(
+    addSelectOption
+      ? [
+          {
+            id_conta: -1,
+            id_utilizador: -1,
+            nome: "Selecione...",
+            saldo: "",
+            tipo: "",
+          },
+        ]
+      : []
+  );
   const [error, setError] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(true);
 
@@ -22,7 +32,7 @@ export const useFetchContas = (): [
     const fetchData = () => {
       try {
         SERVICE.methods.getContas().then((r) => {
-          setResponse(r.data);
+          setContas([...contas, ...r.data]);
           setIsLoading(false);
         });
       } catch (error) {
@@ -31,7 +41,8 @@ export const useFetchContas = (): [
     };
     fetchData();
   }, []);
-  return [response, error, isLoading];
+
+  return [contas, error, isLoading];
 };
 
 export default useFetchContas;

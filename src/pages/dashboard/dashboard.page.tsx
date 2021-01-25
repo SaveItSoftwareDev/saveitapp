@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import useFetchSaldoTotal from "./fetchers/useFetchSaldoTotal.hook";
 import useFetchMovimentos from "./fetchers/useFetchMovimentos.hook";
 import useFetchContas from "./fetchers/useFetchContas.hook";
+import useFetchMe from "./fetchers/useFetchMe.hook";
 
 interface IDashboarPageProps {}
 
@@ -23,7 +24,9 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
     isLoadingMovimentos,
   ] = useFetchMovimentos();
 
-  const [contas, errorContas, isLoadingContas] = useFetchContas();
+  const [contas, errorContas, isLoadingContas] = useFetchContas(false);
+
+  const [me] = useFetchMe();
 
   const dataDespesa = {
     labels: ["Supermercado", "Cinema", "Ginásio"],
@@ -85,7 +88,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
               </BS.Row>
               <BS.Row className="mt-2">
                 <BS.Col lg={12}>
-                  <h5 className="branco">Bem vindo Tiago!</h5>
+                  <h5 className="branco">{`Bem vindo(a) ${me.username}`}</h5>
                 </BS.Col>
               </BS.Row>
               <BS.Row className="mt-2">
@@ -128,7 +131,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                     variant="secondary"
                     className="fundo-cizento"
                     onClick={() => {
-                      localStorage.removeItem("token");
+                      localStorage.clear();
                       history.push("/login");
                     }}
                   >
@@ -190,7 +193,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
               </BS.Row>
               <BS.Row className={"mt-2"}>
                 <BS.Col lg="8">
-                  <BS.Container className="mt-2">
+                  <BS.Container className="mt-2 mov-container">
                     <BS.Table>
                       <thead>
                         <tr>
@@ -198,6 +201,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                           <th>Conta</th>
                           <th>Categoria</th>
                           <th>Subcategoria</th>
+                          <th>Descrição</th>
                           <th>Valor</th>
                         </tr>
                       </thead>
@@ -209,6 +213,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                               <td>{mov.id_conta.nome}</td>
                               <td>{mov.categoria.nome}</td>
                               <td>{mov.sub_categoria.nome}</td>
+                              <td>{mov.descricao}</td>
                               <td>{mov.montante}</td>
                             </tr>
                           );

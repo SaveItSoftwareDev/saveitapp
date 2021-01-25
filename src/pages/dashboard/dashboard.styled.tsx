@@ -73,4 +73,9 @@ export const PageContainer = styled.div`
       }
     }
   }
+
+  .mov-container {
+    font-size: 12px;
+    line-height: 12px;
+  }
 `;

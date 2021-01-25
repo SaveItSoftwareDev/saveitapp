@@ -24,27 +24,24 @@ interface IModalRegistoProps {
 }
 
 const schema = yup.object({
-  id_utilizador: yup.number(),
   descricao: yup.string().trim().required().min(1).max(30),
   categoria: yup.number().required().notOneOf([-1]),
   sub_categoria: yup.number().notOneOf([-1]),
   montante: yup.number().required().min(0.1).max(10000),
   data: yup.string().required(),
   // recorrencia: yup.string().trim().oneOf(["Mensal", "Anual"]),
-  id_conta: yup.number(),
+  id_conta: yup.number().required().notOneOf([-1]),
   tipo: yup.string().trim(),
 });
 
 const initialValues: IMovimentoData = {
-  //Quando houver sessão remover isto, o servidor deve identificar o user em sessão.
-  id_utilizador: 4,
   descricao: "",
   categoria: -1,
   sub_categoria: -1,
   montante: 0,
   data: "",
   //recorrencia: "",
-  id_conta: 4,
+  id_conta: -1,
   tipo: "receita",
 };
 
@@ -60,7 +57,7 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
     errorSubcategorias,
     isLoadingSubcategorias,
   ] = useFetchSubCategoria();
-  const [contasData, errorContas, isLoadingContas] = useFetchContas();
+  const [contasData, errorContas, isLoadingContas] = useFetchContas(true);
 
   return (
     <BS.Modal

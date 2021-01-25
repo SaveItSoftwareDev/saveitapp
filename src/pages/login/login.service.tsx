@@ -5,9 +5,17 @@ export interface ILoginData {
   password: string;
 }
 
+const authToken = JSON.parse(localStorage.getItem("token") || "{}");
+
+const headers = {
+  "Content-Type": "application/json",
+  Authorization: `Token ${authToken.auth_token} `,
+};
+
 export const SERVICE = {
   routes: {
     login: "api/v1/token/login/",
+    me: "api/v1/users/me/",
   },
   methods: {
     doLogin: (data: ILoginData) => {

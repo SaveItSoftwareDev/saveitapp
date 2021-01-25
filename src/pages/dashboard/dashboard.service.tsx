@@ -2,7 +2,6 @@ import axios from "axios";
 
 export interface IMovimentoData {
   id_conta: number;
-  id_utilizador: number;
   tipo: string;
   descricao: string;
   categoria: number;
@@ -26,6 +25,7 @@ export const SERVICE = {
     subcategorias: "sub_categorias",
     registo: "registo",
     contas: "contas",
+    me: "api/v1/users/me",
   },
   methods: {
     getSaldoTotal: () => {
@@ -69,6 +69,11 @@ export const SERVICE = {
     },
     getRegistos: () => {
       return axios.get(`http://127.0.0.1:8000/${SERVICE.routes.registo}/`, {
+        headers,
+      });
+    },
+    getMe: () => {
+      return axios.get(`http://127.0.0.1:8000/${SERVICE.routes.me}/`, {
         headers,
       });
     },

@@ -47,8 +47,6 @@ export const LoginPage: React.FC<ILoginPageProps> = (props) => {
                     })
                     .catch((err) => {
                       console.log("Erro ao fazer login");
-                      // remove this before tests
-                      history.push("/dashboard");
                     });
                 }}
                 initialValues={initialValues}
