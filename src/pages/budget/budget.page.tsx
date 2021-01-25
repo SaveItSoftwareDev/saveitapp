@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 
 import ModalRegisto from "./components/modal-registo.component";
+import useFetchPlaneamentos from "./fetchers/useFetchPlaneamentos.hook";
 
 
   interface IBudgetPageProps {}
@@ -13,6 +14,12 @@ import ModalRegisto from "./components/modal-registo.component";
 
   export const BudgetPage: React.FC<IBudgetPageProps> = (props) => {
     const history = useHistory();
+
+    const [
+      planeamentos,
+      errorPlaneamentos,
+      isLoadingPlaneamentos,
+    ] = useFetchPlaneamentos();
 
     const [showModalOrcamento, setShowModalOrcamento] = React.useState<boolean>(
         false
@@ -100,6 +107,32 @@ import ModalRegisto from "./components/modal-registo.component";
           </BS.Col> 
         </BS.Row>
       </BS.Container>
+
+      <BS.Container className="mt-2">
+                    <BS.Table>
+                      <thead>
+                        <tr>
+                          <th>Categoria</th>
+                          <th>Montante</th>
+                          <th>Prazo</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {planeamentos.map((plan) => {
+                          return (
+                            <tr>
+                              <td>{plan.categoria.nome}</td>
+                              <td>{plan.sub_categoria.id_categoria.nome}</td>
+                              <td>{plan.planeamento.montante_limite}</td>
+                              <td>{plan.prazo}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </BS.Table>
+                  </BS.Container>
+
+
 
       <BS.DropdownButton
         id="dropdown-basic-button"
