@@ -6,7 +6,7 @@ export interface IPlaneamento{
 
     planeamento:{
       id_planeamento: number;
-      montante_limite: string;  
+      montante_limite: number;  
 
       prazo: string;
     };

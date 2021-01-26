@@ -121,7 +121,6 @@ import useFetchPlaneamentos from "./fetchers/useFetchPlaneamentos.hook";
                         {planeamentos.map((plan) => {
                           return (
                             <tr>
-                              <td>{plan.planeamento.montante_limite}</td>
                               <td>{plan.planeamento.prazo}</td>
                             </tr>
                           );
