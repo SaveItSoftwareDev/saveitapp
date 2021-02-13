@@ -27,11 +27,9 @@ export interface IMovimento {
   tipo: string;
 }
 
-export const useFetchMovimentos = (): [
-  data: IMovimento[],
-  error: any,
-  isLoadig: boolean
-] => {
+export const useFetchMovimentos = (
+  page: number
+): [data: IMovimento[], dataSize: number, error: any, isLoadig: boolean] => {
   const [response, setResponse] = React.useState<IMovimento[]>([]);
   const [error, setError] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -49,7 +47,10 @@ export const useFetchMovimentos = (): [
     };
     fetchData();
   }, []);
-  return [response, error, isLoading];
+
+  const start = page === 1 ? 0 : page * 10;
+  const end = start + 10;
+  return [response.slice(start, end), response.length, error, isLoading];
 };
 
 export default useFetchMovimentos;

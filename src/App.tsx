@@ -8,7 +8,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { DashboarPage } from "./pages/dashboard/dashboard.page";
 import { LoginPage } from "./pages/login/login.page";
 import { RegisterPage } from "./pages/register/register.page";
-import {BudgetPage} from "./pages/budget/budget.page";
+import { BudgetPage } from "./pages/budget/budget.page";
 
 function App() {
   return (

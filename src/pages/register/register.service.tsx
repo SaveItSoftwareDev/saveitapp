@@ -6,21 +6,22 @@ import axios from "axios";
 // }
 
 export interface IRegisterData {
-  primeiro_nome: string;
-  ultimo_nome: string;
+  //primeiro_nome: string;
+  //ultimo_nome: string;
+  username: string;
   email: string;
-  //  password: string;
-  idade?: number;
+  password: string;
+  //idade?: number;
   //  genero?: string;
-  cidade?: string;
-  profissao?: string;
+  //cidade?: string;
+  //profissao?: string;
 }
 
 const headers = { "Content-Type": "application/json" };
 
 export const SERVICE = {
   routes: {
-    perfis: "perfis",
+    perfis: "api/v1/users",
   },
   methods: {
     doRegister: (data: IRegisterData) => {

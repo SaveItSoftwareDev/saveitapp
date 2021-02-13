@@ -78,4 +78,11 @@ export const PageContainer = styled.div`
     font-size: 12px;
     line-height: 12px;
   }
+
+  .registo-despesa {
+    background-color: #ff9999;
+  }
+  .registo-receita {
+    background-color: #99ffb8;
+  }
 `;

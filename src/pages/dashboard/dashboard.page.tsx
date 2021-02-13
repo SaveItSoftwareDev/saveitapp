@@ -2,9 +2,12 @@ import * as React from "react";
 import * as S from "./dashboard.styled";
 
 import * as BS from "react-bootstrap";
+import * as Icon from "react-bootstrap-icons";
 import { Doughnut } from "react-chartjs-2";
 
-import ModalRegisto from "./components/modal-registo.component";
+import ModalRegisto, {
+  ETipoRegisto,
+} from "./components/modal-registo.component";
 
 import { useHistory } from "react-router-dom";
 
@@ -12,21 +15,64 @@ import useFetchSaldoTotal from "./fetchers/useFetchSaldoTotal.hook";
 import useFetchMovimentos from "./fetchers/useFetchMovimentos.hook";
 import useFetchContas from "./fetchers/useFetchContas.hook";
 import useFetchMe from "./fetchers/useFetchMe.hook";
+import useFetchTotaisPorMes, {
+  ETipoTotal,
+} from "./fetchers/useFetchTotaisPorMes.hook";
+import { isLoggedIn } from "../../helpers/authReducer.reducer";
 
 interface IDashboarPageProps {}
 
 export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
   const history = useHistory();
 
+  const [movimentosPage, setMovimentosPage] = React.useState(1);
+
   const [
     movimentos,
+    movimentosSize,
     errorMovimentos,
     isLoadingMovimentos,
-  ] = useFetchMovimentos();
+  ] = useFetchMovimentos(movimentosPage);
+
+  const renderPaginationItems = () => {
+    const items = [];
+
+    for (let index = 1; index < Math.ceil(movimentosSize / 10); index++) {
+      items.push(
+        <BS.PageItem
+          active={index === movimentosPage}
+          onClick={() => {
+            setMovimentosPage(index);
+          }}
+        >
+          {index}
+        </BS.PageItem>
+      );
+    }
+
+    return items;
+  };
 
   const [contas, errorContas, isLoadingContas] = useFetchContas(false);
+  const [
+    totaisMesCredito,
+    errorTotaisMesCredito,
+    isLoadingTotaisMesCredito,
+  ] = useFetchTotaisPorMes(ETipoTotal.CREDITO);
+
+  const [
+    totaisMesDebito,
+    errorTotaisMesDebito,
+    isLoadingTotaisMesDebito,
+  ] = useFetchTotaisPorMes(ETipoTotal.DEBITO);
 
   const [me] = useFetchMe();
+
+  React.useEffect(() => {
+    if (!isLoggedIn()) {
+      history.push("login");
+    }
+  }, []);
 
   const dataDespesa = {
     labels: ["Supermercado", "Cinema", "Ginásio"],
@@ -54,11 +100,26 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
     false
   );
 
+  const [showModalDespesa, setShouModalDespesa] = React.useState<boolean>(
+    false
+  );
+
   const renderModalReceita = () => {
     return (
       <ModalRegisto
+        tipo={ETipoRegisto.receita}
         show={showModalReceita}
         onHide={setShouModalReceita}
+      ></ModalRegisto>
+    );
+  };
+
+  const renderModalDespesa = () => {
+    return (
+      <ModalRegisto
+        tipo={ETipoRegisto.despesa}
+        show={showModalDespesa}
+        onHide={setShouModalDespesa}
       ></ModalRegisto>
     );
   };
@@ -76,15 +137,6 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                 }}
               >
                 <h1 className="w-100">Save iT</h1>
-              </BS.Row>
-              <BS.Row className="mt-2">
-                <BS.Col lg={12}>
-                  <BS.Image
-                    className={"avatar"}
-                    src="images/avatar.png"
-                    rounded
-                  />
-                </BS.Col>
               </BS.Row>
               <BS.Row className="mt-2">
                 <BS.Col lg={12}>
@@ -151,10 +203,12 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                       <BS.Card.Text>
                         {isLoadingContas
                           ? "loading..."
-                          : contas.length &&
-                            contas
-                              .map((conta) => Number.parseFloat(conta.saldo))
-                              .reduce((acc, nextval) => acc + nextval)}
+                          : `${
+                              contas.length &&
+                              contas
+                                .map((conta) => Number.parseFloat(conta.saldo))
+                                .reduce((acc, nextval) => acc + nextval)
+                            } €`}
                       </BS.Card.Text>
                     </BS.Card.Body>
                   </BS.Card>
@@ -174,20 +228,28 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                 </BS.Col>
                 <BS.Col lg={3}>
                   <BS.Carousel className={"saldo-receita"} indicators={false}>
-                    <BS.Carousel.Item>
-                      <h5>Receita Mensal</h5>
-                      <h5>4,00€</h5>
-                      <p>novembro 2020</p>
-                    </BS.Carousel.Item>
+                    {totaisMesCredito.map((tmc) => {
+                      return (
+                        <BS.Carousel.Item>
+                          <h5>Receita Mensal</h5>
+                          <h5>{tmc.total}€</h5>
+                          <p>{tmc.anoMes}</p>
+                        </BS.Carousel.Item>
+                      );
+                    })}
                   </BS.Carousel>
                 </BS.Col>
                 <BS.Col lg={3}>
                   <BS.Carousel className={"saldo-despesa"} indicators={false}>
-                    <BS.Carousel.Item>
-                      <h5>Despesa Mensal</h5>
-                      <h5>56,00€</h5>
-                      <p>novembro 2020</p>
-                    </BS.Carousel.Item>
+                    {totaisMesDebito.map((tmc) => {
+                      return (
+                        <BS.Carousel.Item>
+                          <h5>Despesa Mensal</h5>
+                          <h5>{tmc.total}€</h5>
+                          <p>{tmc.anoMes}</p>
+                        </BS.Carousel.Item>
+                      );
+                    })}
                   </BS.Carousel>
                 </BS.Col>
               </BS.Row>
@@ -203,23 +265,35 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                           <th>Subcategoria</th>
                           <th>Descrição</th>
                           <th>Valor</th>
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody>
                         {movimentos.map((mov) => {
                           return (
-                            <tr>
+                            <tr
+                              className={`registo-${mov.tipo}`}
+                              key={`${mov.data}-${mov.descricao}`}
+                            >
                               <td>{mov.data}</td>
                               <td>{mov.id_conta.nome}</td>
                               <td>{mov.categoria.nome}</td>
                               <td>{mov.sub_categoria.nome}</td>
                               <td>{mov.descricao}</td>
-                              <td>{mov.montante}</td>
+                              <td>{`${mov.montante} €`}</td>
+                              <td>
+                                {mov.tipo === "receita" ? (
+                                  <Icon.GraphUp />
+                                ) : (
+                                  <Icon.GraphDown />
+                                )}
+                              </td>
                             </tr>
                           );
                         })}
                       </tbody>
                     </BS.Table>
+                    <BS.Pagination>{renderPaginationItems()}</BS.Pagination>
                   </BS.Container>
                 </BS.Col>
                 <BS.Col lg="4">
@@ -266,11 +340,18 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
         >
           Receita
         </BS.Dropdown.Item>
-        <BS.Dropdown.Item href="#/action-2">Despesa</BS.Dropdown.Item>
+        <BS.Dropdown.Item
+          onClick={() => {
+            setShouModalDespesa(!showModalDespesa);
+          }}
+        >
+          Despesa
+        </BS.Dropdown.Item>
         <BS.Dropdown.Item href="#/action-3">Conta</BS.Dropdown.Item>
         <BS.Dropdown.Item href="#/action-4">Categoria</BS.Dropdown.Item>
       </BS.DropdownButton>
       {renderModalReceita()}
+      {renderModalDespesa()}
     </S.PageContainer>
   );
 };

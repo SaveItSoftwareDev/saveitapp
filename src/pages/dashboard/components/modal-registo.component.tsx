@@ -18,7 +18,13 @@ import useFetchSubCategoria, {
 
 import useFetchContas, { IConta } from "../fetchers/useFetchContas.hook";
 
+export enum ETipoRegisto {
+  receita = "receita",
+  despesa = "despesa",
+}
+
 interface IModalRegistoProps {
+  tipo: ETipoRegisto;
   show: boolean;
   onHide: (show: boolean) => void;
 }
@@ -34,18 +40,18 @@ const schema = yup.object({
   tipo: yup.string().trim(),
 });
 
-const initialValues: IMovimentoData = {
-  descricao: "",
-  categoria: -1,
-  sub_categoria: -1,
-  montante: 0,
-  data: "",
-  //recorrencia: "",
-  id_conta: -1,
-  tipo: "receita",
-};
-
 export const ModalRegisto = (props: IModalRegistoProps) => {
+  const initialValues: IMovimentoData = {
+    descricao: "",
+    categoria: -1,
+    sub_categoria: -1,
+    montante: 0,
+    data: "",
+    //recorrencia: "",
+    id_conta: -1,
+    tipo: props.tipo,
+  };
+
   const history = useHistory();
   const [
     categoriasData,
@@ -68,7 +74,7 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
     >
       <BS.Modal.Header closeButton>
         <BS.Modal.Title id="example-custom-modal-styling-title">
-          Receita{" "}
+          {props.tipo}
         </BS.Modal.Title>
       </BS.Modal.Header>
       <BS.Modal.Body>
@@ -97,7 +103,7 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
             errors,
           }) => (
             <BS.Form noValidate onSubmit={handleSubmit} className="w-100">
-              {<div>{JSON.stringify(errors)}</div>}
+              {/*<div>{JSON.stringify(errors)}</div>*/}
               <BS.Row>
                 <BS.Col>
                   <BS.Form.Group>

@@ -8,6 +8,10 @@ import { Formik } from "formik";
 
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
+import {
+  asyncLocalStorage,
+  isLoggedIn,
+} from "../../helpers/authReducer.reducer";
 
 const schema = yup.object({
   username: yup.string().required().max(35).min(1),
@@ -20,9 +24,24 @@ const initialValues: ILoginData = {
 };
 interface ILoginPageProps {}
 
+interface ILoginError {
+  hasError: boolean;
+  message: string;
+}
+
 export const LoginPage: React.FC<ILoginPageProps> = (props) => {
   // Hook - função responsável por fazer os devidos redirects na página.
   const history = useHistory();
+  const [errorOnLogin, setErrorOnLogin] = React.useState<ILoginError>({
+    hasError: false,
+    message: "",
+  });
+
+  React.useEffect(() => {
+    if (isLoggedIn()) {
+      history.push("dashboard");
+    }
+  }, []);
 
   return (
     <S.PageContainer>
@@ -36,17 +55,22 @@ export const LoginPage: React.FC<ILoginPageProps> = (props) => {
                   SERVICE.methods
                     .doLogin(values)
                     .then((result) => {
-                      localStorage.setItem(
-                        "token",
-                        JSON.stringify(result.data)
-                      );
-                      console.log(
-                        "LOGIN COM SUCESSO! -> Redirecionar para DASHBOARD"
-                      );
-                      history.push("/dashboard");
+                      asyncLocalStorage
+                        .setItem("token", JSON.stringify(result.data))
+                        .then(() => {
+                          setErrorOnLogin({
+                            hasError: false,
+                            message: "",
+                          });
+
+                          history.push("/dashboard");
+                        });
                     })
-                    .catch((err) => {
-                      console.log("Erro ao fazer login");
+                    .catch(() => {
+                      setErrorOnLogin({
+                        hasError: true,
+                        message: "Erro ao fazer login",
+                      });
                     });
                 }}
                 initialValues={initialValues}
@@ -85,18 +109,18 @@ export const LoginPage: React.FC<ILoginPageProps> = (props) => {
                         value={values.password}
                         isValid={touched.password && !errors.password}
                       />
+                      <BS.Row className="mt-2">
+                        <BS.Col>
+                          {errorOnLogin.hasError && (
+                            <BS.Alert variant="danger">
+                              {errorOnLogin.message}
+                            </BS.Alert>
+                          )}
+                        </BS.Col>
+                      </BS.Row>
                     </BS.Form.Group>
 
                     <BS.Row>
-                      <BS.Col lg={6}>
-                        <BS.Button
-                          variant="secondary"
-                          type="submit"
-                          className="w-100 botao-entrar"
-                        >
-                          entrar
-                        </BS.Button>
-                      </BS.Col>
                       <BS.Col lg={6}>
                         <BS.Button
                           variant="link"
@@ -106,6 +130,15 @@ export const LoginPage: React.FC<ILoginPageProps> = (props) => {
                           }}
                         >
                           Novo registo
+                        </BS.Button>
+                      </BS.Col>
+                      <BS.Col lg={6}>
+                        <BS.Button
+                          variant="secondary"
+                          type="submit"
+                          className="w-100 botao-entrar"
+                        >
+                          entrar
                         </BS.Button>
                       </BS.Col>
                     </BS.Row>

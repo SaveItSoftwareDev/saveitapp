@@ -1,6 +1,6 @@
 import * as React from "react";
-import * as S from "./register.styled";
-import { IRegisterData, SERVICE } from "./register.service";
+import * as S from "./defenicoes.styled";
+import { IRegisterData, SERVICE } from "./defenicoes.service";
 
 import * as BS from "react-bootstrap";
 
@@ -8,41 +8,36 @@ import { Formik } from "formik";
 
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
+import useFetchMe from "../dashboard/fetchers/useFetchMe.hook";
 
-//https://stackoverflow.com/questions/55451304/formik-yup-password-strength-validation-with-react
 const schema = yup.object({
-  //primeiro_nome: yup.string().trim().required().min(1).max(20),
-  //ultimo_nome: yup.string().trim().required().min(1).max(20),
+  primeiro_nome: yup.string().trim().required().min(1).max(20),
+  ultimo_nome: yup.string().trim().required().min(1).max(20),
   email: yup.string().trim().required().max(35).min(1),
-  password: yup
-    .string()
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-    ),
-  username: yup.string().trim().required().min(5),
-  //idade: yup.number().min(2),
+  // password: yup.string().trim().required().min(5),
+  idade: yup.number().min(2),
   //genero: yup.string().min(1).max(30),
-  //cidade: yup.string().min(2).max(20),
-  //profissao: yup.string().min(2).max(20),
+  cidade: yup.string().min(2).max(20),
+  profissao: yup.string().min(2).max(20),
 });
 
 const initialValues: IRegisterData = {
-  //primeiro_nome: "",
-  //ultimo_nome: "",
+  primeiro_nome: "",
+  ultimo_nome: "",
   email: "",
-  password: "",
-  username: "",
-  //idade: undefined,
+  //password: "",
+  idade: undefined,
   //genero: "",
-  //cidade: "",
-  //profissao: "",
+  cidade: "",
+  profissao: "",
 };
 
 interface IRegisterPageProps {}
 
 export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
   const history = useHistory();
+
+  const [meData] = useFetchMe();
   return (
     <S.PageContainer>
       <BS.Container fluid className="h-100">
@@ -56,6 +51,15 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
                 }}
               >
                 <h1>Save iT</h1>
+              </BS.Row>
+              <BS.Row className="mt-2">
+                <BS.Col lg={12}>
+                  <BS.Image
+                    className={"avatar"}
+                    src="images/avatar.png"
+                    rounded
+                  />
+                </BS.Col>
               </BS.Row>
             </BS.Container>
           </BS.Col>
@@ -97,15 +101,30 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
                             <BS.Form.Control
                               className="italico"
                               type="text"
-                              name="username"
-                              placeholder="username"
+                              name="primeiro_nome"
+                              placeholder="primeiro nome"
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              value={values.username}
-                              isValid={touched.username && !errors.username}
+                              value={values.primeiro_nome}
+                              isValid={
+                                touched.primeiro_nome && !errors.primeiro_nome
+                              }
                             />
                           </BS.Form.Group>
-
+                          <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="text"
+                              name="ultimo_nome"
+                              placeholder="último nome"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.ultimo_nome}
+                              isValid={
+                                touched.ultimo_nome && !errors.ultimo_nome
+                              }
+                            />
+                          </BS.Form.Group>
                           <BS.Form.Group>
                             <BS.Form.Control
                               className="italico"
@@ -119,7 +138,7 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
                             />
                           </BS.Form.Group>
 
-                          <BS.Form.Group>
+                          {/* <BS.Form.Group>
                             <BS.Form.Control
                               className="italico"
                               type="password"
@@ -130,12 +149,71 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
                               value={values.password}
                               isValid={touched.password && !errors.password}
                             />
-                            <span>{errors.password}</span>
+                          </BS.Form.Group> */}
+
+                          <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="number"
+                              name="idade"
+                              placeholder="idade"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.idade}
+                              isValid={touched.idade && !errors.idade}
+                            />
+                          </BS.Form.Group>
+
+                          {/* <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="text"
+                              name="genero"
+                              placeholder="género"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.genero}
+                              isValid={touched.genero && !errors.genero}
+                            />
+                          </BS.Form.Group> */}
+                          <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="text"
+                              name="cidade"
+                              placeholder="cidade"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.cidade}
+                              isValid={touched.cidade && !errors.cidade}
+                            />
+                          </BS.Form.Group>
+
+                          <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="text"
+                              name="profissao"
+                              placeholder="profissão"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.profissao}
+                              isValid={touched.profissao && !errors.profissao}
+                            />
                           </BS.Form.Group>
                         </BS.Col>
                       </BS.Row>
 
                       <BS.Row className="justify-content-between">
+                        <BS.Col lg={3}>
+                          <BS.Button
+                            variant="secondary"
+                            type="submit"
+                            className="w-100 negrito"
+                          >
+                            salvar
+                          </BS.Button>
+                        </BS.Col>
                         <BS.Col lg={3}>
                           <BS.Button
                             variant="outline-secondary"
@@ -146,16 +224,6 @@ export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
                             }}
                           >
                             voltar
-                          </BS.Button>
-                        </BS.Col>
-                        <BS.Col lg={3}>
-                          <BS.Button
-                            variant="secondary"
-                            type="submit"
-                            className="w-100 negrito"
-                            disabled={isValid && !errors}
-                          >
-                            salvar
                           </BS.Button>
                         </BS.Col>
                       </BS.Row>
