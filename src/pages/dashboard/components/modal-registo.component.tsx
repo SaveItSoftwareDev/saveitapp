@@ -2,7 +2,7 @@ import * as React from "react";
 import * as BS from "react-bootstrap";
 import * as yup from "yup";
 
-import { IMovimentoData, SERVICE } from "../dashboard.service";
+import { IMovimentoData, IConta, SERVICE } from "../dashboard.service";
 
 import { useHistory } from "react-router-dom";
 
@@ -16,7 +16,7 @@ import useFetchSubCategoria, {
   ISubCategoria,
 } from "../fetchers/useFetchSubCategorias.hook";
 
-import useFetchContas, { IConta } from "../fetchers/useFetchContas.hook";
+import useFetchContas from "../fetchers/useFetchContas.hook";
 
 export enum ETipoRegisto {
   receita = "receita",
@@ -84,9 +84,8 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
             SERVICE.methods
               .createReceita(values)
               .then((result) => {
-                console.log(
-                  "RECEITA COM SUCESSO! -> Redirecionar para DASHBOARD"
-                );
+                // depois de inserir com sucesso, faz refresh à pagina
+                window.location.reload();
                 props.onHide(false);
               })
               .catch((err) => console.log("Erro ao fazer registo"));

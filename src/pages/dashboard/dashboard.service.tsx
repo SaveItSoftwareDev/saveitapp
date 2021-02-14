@@ -12,6 +12,14 @@ export interface IMovimentoData {
   recorrencia?: string;
 }
 
+export interface IConta {
+  id_conta?: number;
+  id_utilizador?: number;
+  nome: string;
+  saldo?: string;
+  tipo?: string;
+}
+
 const authToken = JSON.parse(localStorage.getItem("token") || "{}");
 
 const headers = {
@@ -84,6 +92,25 @@ export const SERVICE = {
       return axios.get(`http://127.0.0.1:8000/${SERVICE.routes.contas}/`, {
         headers,
       });
+    },
+
+    createConta: (data: IConta) => {
+      return axios.post(
+        `http://127.0.0.1:8000/${SERVICE.routes.contas}/`,
+        data,
+        {
+          headers,
+        }
+      );
+    },
+
+    deleteConta: (id: number) => {
+      return axios.delete(
+        `http://127.0.0.1:8000/${SERVICE.routes.contas}/${id}/`,
+        {
+          headers,
+        }
+      );
     },
 
     createReceita: (data: IMovimentoData) => {

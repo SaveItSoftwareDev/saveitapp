@@ -9,6 +9,8 @@ import ModalRegisto, {
   ETipoRegisto,
 } from "./components/modal-registo.component";
 
+import ModalConta from "./components/modal-contas.component";
+
 import { useHistory } from "react-router-dom";
 
 import useFetchSaldoTotal from "./fetchers/useFetchSaldoTotal.hook";
@@ -35,7 +37,18 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
   ] = useFetchMovimentos(movimentosPage);
 
   const renderPaginationItems = () => {
-    const items = [];
+    const items = [
+      <BS.Pagination.First
+        onClick={() => {
+          setMovimentosPage(1);
+        }}
+      />,
+      <BS.Pagination.Prev
+        onClick={() => {
+          setMovimentosPage(movimentosPage - 1);
+        }}
+      />,
+    ];
 
     for (let index = 1; index < Math.ceil(movimentosSize / 10); index++) {
       items.push(
@@ -49,6 +62,19 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
         </BS.PageItem>
       );
     }
+
+    items.push(
+      <BS.Pagination.Next
+        onClick={() => {
+          setMovimentosPage(movimentosPage + 1);
+        }}
+      />,
+      <BS.Pagination.Last
+        onClick={() => {
+          setMovimentosPage(Math.ceil(movimentosSize / 5));
+        }}
+      />
+    );
 
     return items;
   };
@@ -104,6 +130,8 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
     false
   );
 
+  const [showModalConta, setShouModalConta] = React.useState<boolean>(false);
+
   const renderModalReceita = () => {
     return (
       <ModalRegisto
@@ -121,6 +149,12 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
         show={showModalDespesa}
         onHide={setShouModalDespesa}
       ></ModalRegisto>
+    );
+  };
+
+  const renderModalConta = () => {
+    return (
+      <ModalConta show={showModalConta} onHide={setShouModalConta}></ModalConta>
     );
   };
 
@@ -206,7 +240,9 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                           : `${
                               contas.length &&
                               contas
-                                .map((conta) => Number.parseFloat(conta.saldo))
+                                .map((conta) =>
+                                  Number.parseFloat(conta.saldo || "0")
+                                )
                                 .reduce((acc, nextval) => acc + nextval)
                             } €`}
                       </BS.Card.Text>
@@ -255,8 +291,11 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
               </BS.Row>
               <BS.Row className={"mt-2"}>
                 <BS.Col lg="8">
-                  <BS.Container className="mt-2 mov-container">
-                    <BS.Table>
+                  <BS.Container
+                    className="mt-2 overflow-auto"
+                    style={{ maxHeight: "400px" }}
+                  >
+                    <BS.Table responsive className="table-sm">
                       <thead>
                         <tr>
                           <th>Data</th>
@@ -272,7 +311,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                         {movimentos.map((mov) => {
                           return (
                             <tr
-                              className={`registo-${mov.tipo}`}
+                              className={`registo-${mov.tipo} p-0`}
                               key={`${mov.data}-${mov.descricao}`}
                             >
                               <td>{mov.data}</td>
@@ -293,8 +332,14 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                         })}
                       </tbody>
                     </BS.Table>
-                    <BS.Pagination>{renderPaginationItems()}</BS.Pagination>
                   </BS.Container>
+                  <BS.Row>
+                    <BS.Col lg="12" md="12">
+                      <BS.Pagination className="justify-content-center">
+                        {renderPaginationItems()}
+                      </BS.Pagination>
+                    </BS.Col>
+                  </BS.Row>
                 </BS.Col>
                 <BS.Col lg="4">
                   <BS.Row>
@@ -347,11 +392,18 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
         >
           Despesa
         </BS.Dropdown.Item>
-        <BS.Dropdown.Item href="#/action-3">Conta</BS.Dropdown.Item>
+        <BS.Dropdown.Item
+          onClick={() => {
+            setShouModalConta(!showModalConta);
+          }}
+        >
+          Conta
+        </BS.Dropdown.Item>
         <BS.Dropdown.Item href="#/action-4">Categoria</BS.Dropdown.Item>
       </BS.DropdownButton>
       {renderModalReceita()}
       {renderModalDespesa()}
+      {renderModalConta()}
     </S.PageContainer>
   );
 };
