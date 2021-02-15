@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ICategoria } from "./fetchers/useFetchCategorias.hook";
 import { ETipoTotal, ITotalMes } from "./fetchers/useFetchTotaisPorMes.hook";
 
 export interface IMovimentoData {
@@ -104,9 +105,29 @@ export const SERVICE = {
       );
     },
 
+    createCategoria: (data: ICategoria) => {
+      return axios.post(
+        `http://127.0.0.1:8000/${SERVICE.routes.categorias}/`,
+
+        data,
+        {
+          headers,
+        }
+      );
+    },
+
     deleteConta: (id: number) => {
       return axios.delete(
         `http://127.0.0.1:8000/${SERVICE.routes.contas}/${id}/`,
+        {
+          headers,
+        }
+      );
+    },
+
+    deleteCategoria: (id: number) => {
+      return axios.delete(
+        `http://127.0.0.1:8000/${SERVICE.routes.categorias}/${id}/`,
         {
           headers,
         }

@@ -57,7 +57,7 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
     categoriasData,
     errorCategorias,
     isLoadingCategorias,
-  ] = useFetchCategorias();
+  ] = useFetchCategorias(true);
   const [
     subcategoriasData,
     errorSubcategorias,

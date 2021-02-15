@@ -11,9 +11,10 @@ import ModalRegisto, {
 
 import ModalConta from "./components/modal-contas.component";
 
+import ModalCategoria from "./components/modal-categorias.component";
+
 import { useHistory } from "react-router-dom";
 
-import useFetchSaldoTotal from "./fetchers/useFetchSaldoTotal.hook";
 import useFetchMovimentos from "./fetchers/useFetchMovimentos.hook";
 import useFetchContas from "./fetchers/useFetchContas.hook";
 import useFetchMe from "./fetchers/useFetchMe.hook";
@@ -27,8 +28,10 @@ interface IDashboarPageProps {}
 export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
   const history = useHistory();
 
+  // estado para controlar a paginação da tabela
   const [movimentosPage, setMovimentosPage] = React.useState(1);
 
+  // fetcher para obeter os movimentos receitas e despesas, bem como o total de movimentos em BD (movimentosSize) para poder controlar a paginação
   const [
     movimentos,
     movimentosSize,
@@ -36,6 +39,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
     isLoadingMovimentos,
   ] = useFetchMovimentos(movimentosPage);
 
+  // função que vai criar os indicadores de paginação da tabela
   const renderPaginationItems = () => {
     const items = [
       <BS.Pagination.First
@@ -50,6 +54,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
       />,
     ];
 
+    // vamos assumir que cada página tem 10 linhas, o Math.ceil arredonda para cima
     for (let index = 1; index < Math.ceil(movimentosSize / 10); index++) {
       items.push(
         <BS.PageItem
@@ -79,27 +84,37 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
     return items;
   };
 
+  //fetcher para obter a lista de contas, recebe um booleano como argumento que indica se é para injetar
+  //uma conta ficticia para trabalhar com as dropdownds, pq este fetcher tb é usado noutros sitios
   const [contas, errorContas, isLoadingContas] = useFetchContas(false);
+
+  // este fetcher está a devolver valores random para os totais por mês de credito
   const [
     totaisMesCredito,
     errorTotaisMesCredito,
     isLoadingTotaisMesCredito,
   ] = useFetchTotaisPorMes(ETipoTotal.CREDITO);
 
+  // este fetcher está a devolver valores random para os totais por mês de debito
   const [
     totaisMesDebito,
     errorTotaisMesDebito,
     isLoadingTotaisMesDebito,
   ] = useFetchTotaisPorMes(ETipoTotal.DEBITO);
 
+  // Fetcher para ir buscar a info referente ao user logado
   const [me] = useFetchMe();
 
+  // este effect serve para verificar se o user está logado (usa uma função que verifica se existe um token em localstorage)
+  // caso o user n esteja logado é mandado para a página de login
+  // este fetcher executa uma vez quando a página é renderizada
   React.useEffect(() => {
     if (!isLoggedIn()) {
       history.push("login");
     }
   }, []);
 
+  // dados dummy para os donut charts
   const dataDespesa = {
     labels: ["Supermercado", "Cinema", "Ginásio"],
     datasets: [
@@ -122,42 +137,64 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
     ],
   };
 
-  const [showModalReceita, setShouModalReceita] = React.useState<boolean>(
+  // Este state controla se a modal de inserir receita está aberta ou fechada
+  const [showModalReceita, setShowModalReceita] = React.useState<boolean>(
     false
   );
 
-  const [showModalDespesa, setShouModalDespesa] = React.useState<boolean>(
+  // Este state controla se a modal de inserir despesa está aberta ou fechada
+  const [showModalDespesa, setShowModalDespesa] = React.useState<boolean>(
     false
   );
 
-  const [showModalConta, setShouModalConta] = React.useState<boolean>(false);
+  // Este state controla se a modal de inserir conta está aberta ou fechada
+  const [showModalConta, setShowModalConta] = React.useState<boolean>(false);
 
+  // Este state controla se a modal de inserir conta está aberta ou fechada
+  const [showModalCategoria, setShowModalCategoria] = React.useState<boolean>(
+    false
+  );
+
+  // funcção que renderiza a modal de receita
   const renderModalReceita = () => {
     return (
       <ModalRegisto
         tipo={ETipoRegisto.receita}
         show={showModalReceita}
-        onHide={setShouModalReceita}
+        onHide={setShowModalReceita}
       ></ModalRegisto>
     );
   };
 
+  // funcção que renderiza a modal de despesa
   const renderModalDespesa = () => {
     return (
       <ModalRegisto
         tipo={ETipoRegisto.despesa}
         show={showModalDespesa}
-        onHide={setShouModalDespesa}
+        onHide={setShowModalDespesa}
       ></ModalRegisto>
     );
   };
 
+  // funcção que renderiza a modal de contas
   const renderModalConta = () => {
     return (
-      <ModalConta show={showModalConta} onHide={setShouModalConta}></ModalConta>
+      <ModalConta show={showModalConta} onHide={setShowModalConta}></ModalConta>
     );
   };
 
+  // funcção que renderiza a modal de categorias
+  const renderModalCategoria = () => {
+    return (
+      <ModalCategoria
+        show={showModalCategoria}
+        onHide={setShowModalCategoria}
+      ></ModalCategoria>
+    );
+  };
+
+  // página de dashboard
   return (
     <S.PageContainer>
       <BS.Container fluid className="h-100">
@@ -217,7 +254,9 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                     variant="secondary"
                     className="fundo-cizento"
                     onClick={() => {
+                      // quando o user clica no logout o localstorage é limpo, i.e. o token
                       localStorage.clear();
+                      // user é enviado para a página de login
                       history.push("/login");
                     }}
                   >
@@ -295,7 +334,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                     className="mt-2 overflow-auto"
                     style={{ maxHeight: "400px" }}
                   >
-                    <BS.Table responsive className="table-sm">
+                    <BS.Table responsive className="sm-table">
                       <thead>
                         <tr>
                           <th>Data</th>
@@ -333,7 +372,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                       </tbody>
                     </BS.Table>
                   </BS.Container>
-                  <BS.Row>
+                  <BS.Row className="mt-2">
                     <BS.Col lg="12" md="12">
                       <BS.Pagination className="justify-content-center">
                         {renderPaginationItems()}
@@ -380,30 +419,37 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
       >
         <BS.Dropdown.Item
           onClick={() => {
-            setShouModalReceita(!showModalReceita);
+            setShowModalReceita(true);
           }}
         >
           Receita
         </BS.Dropdown.Item>
         <BS.Dropdown.Item
           onClick={() => {
-            setShouModalDespesa(!showModalDespesa);
+            setShowModalDespesa(true);
           }}
         >
           Despesa
         </BS.Dropdown.Item>
         <BS.Dropdown.Item
           onClick={() => {
-            setShouModalConta(!showModalConta);
+            setShowModalConta(true);
           }}
         >
           Conta
         </BS.Dropdown.Item>
-        <BS.Dropdown.Item href="#/action-4">Categoria</BS.Dropdown.Item>
+        <BS.Dropdown.Item
+          onClick={() => {
+            setShowModalCategoria(true);
+          }}
+        >
+          Categoria
+        </BS.Dropdown.Item>
       </BS.DropdownButton>
       {renderModalReceita()}
       {renderModalDespesa()}
       {renderModalConta()}
+      {renderModalCategoria()}
     </S.PageContainer>
   );
 };

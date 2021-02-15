@@ -2,18 +2,16 @@ import * as React from "react";
 import { SERVICE } from "../dashboard.service";
 
 export interface ICategoria {
-  id_categoria: number;
+  id_categoria?: number;
   nome: string;
 }
 
-export const useFetchCategorias = (): [
-  data: ICategoria[],
-  error: any,
-  isLoadig: boolean
-] => {
-  const [response, setResponse] = React.useState<ICategoria[]>([
-    { id_categoria: -1, nome: "Selecione..." },
-  ]);
+export const useFetchCategorias = (
+  addSelectOption?: boolean
+): [data: ICategoria[], error: any, isLoadig: boolean] => {
+  const [response, setResponse] = React.useState<ICategoria[]>(
+    addSelectOption ? [{ id_categoria: -1, nome: "Selecione..." }] : []
+  );
   const [error, setError] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(true);
 
