@@ -4,12 +4,10 @@ import { SERVICE } from "../budget.service";
 
 export interface IPlaneamento{
 
-    planeamento:{
       id_planeamento: number;
-      montante_limite: number;  
-
+      montante_limite?: number;  
       prazo: string;
-    };
+      categoria: number;
   }
 
 export const useFetchPlaneamentos = (): [
@@ -25,7 +23,7 @@ export const useFetchPlaneamentos = (): [
     const fetchData = () => {
       try {
         SERVICE.methods.getPlaneamentos().then((r) => {
-          setResponse(r.data);
+          setResponse([r.data]);
           setIsLoading(false);
         });
       } catch (error) {

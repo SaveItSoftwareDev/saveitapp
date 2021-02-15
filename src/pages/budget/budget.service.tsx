@@ -49,7 +49,9 @@ export interface IOrcamentoData {
       },
 
       getPlaneamentos: () => {
-        return axios.get(`http://127.0.0.1:8000/${SERVICE.routes.planeamentos}/`);
+        return axios.get(`http://127.0.0.1:8000/${SERVICE.routes.planeamentos}/`, {
+          headers,
+        });
       },
     },
   };
