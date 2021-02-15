@@ -8,34 +8,32 @@ import * as yup from "yup";
 import ModalRegisto from "./components/modal-registo.component";
 import useFetchPlaneamentos from "./fetchers/useFetchPlaneamentos.hook";
 
+interface IBudgetPageProps {}
 
-  interface IBudgetPageProps {}
+export const BudgetPage: React.FC<IBudgetPageProps> = (props) => {
+  const history = useHistory();
 
+  const [
+    planeamentos,
+    errorPlaneamentos,
+    isLoadingPlaneamentos,
+  ] = useFetchPlaneamentos();
 
-  export const BudgetPage: React.FC<IBudgetPageProps> = (props) => {
-    const history = useHistory();
+  const [showModalOrcamento, setShowModalOrcamento] = React.useState<boolean>(
+    false
+  );
 
-    const [
-      planeamentos,
-      errorPlaneamentos,
-      isLoadingPlaneamentos,
-    ] = useFetchPlaneamentos();
-
-    const [showModalOrcamento, setShowModalOrcamento] = React.useState<boolean>(
-        false
-      );
-    
-      const renderModalOrcamento= () => {
-        return (
-          <ModalRegisto
-            show={showModalOrcamento}
-            onHide={setShowModalOrcamento}
-          ></ModalRegisto>
-        );
-      };
-
+  const renderModalOrcamento = () => {
     return (
-      <S.PageContainer>
+      <ModalRegisto
+        show={showModalOrcamento}
+        onHide={setShowModalOrcamento}
+      ></ModalRegisto>
+    );
+  };
+
+  return (
+    <S.PageContainer>
       <BS.Container fluid className="h-100">
         <BS.Row className="h-100">
           <BS.Col lg={2} className="sidebar">
@@ -104,32 +102,33 @@ import useFetchPlaneamentos from "./fetchers/useFetchPlaneamentos.hook";
                 </BS.Col>
               </BS.Row>
             </BS.Container>
-          </BS.Col> 
+          </BS.Col>
+          <BS.Col lg={10}>
+            <BS.Container className="mt-2">
+              <BS.Table>
+                <thead>
+                  <tr>
+                    <th>Categoria</th>
+                    <th>Montante</th>
+                    <th>Prazo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {planeamentos.map((plan) => {
+                    return (
+                      <tr>
+                        <td>{plan.montante_limite}</td>
+                        <td>{plan.id_planeamento}</td>
+                        <td>{plan.categoria.nome}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </BS.Table>
+            </BS.Container>
+          </BS.Col>
         </BS.Row>
       </BS.Container>
-
-      <BS.Container className="mt-2">
-                    <BS.Table>
-                      <thead>
-                        <tr>
-                          <th>Categoria</th>
-                          <th>Montante</th>
-                          <th>Prazo</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {planeamentos.map((plan) => {
-                          return (
-                            <tr>
-                              <td>{plan.planeamento.prazo}</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </BS.Table>
-                  </BS.Container>
-
-
 
       <BS.DropdownButton
         id="dropdown-basic-button"
@@ -141,10 +140,11 @@ import useFetchPlaneamentos from "./fetchers/useFetchPlaneamentos.hook";
           onClick={() => {
             setShowModalOrcamento(!showModalOrcamento);
           }}
-        >Novo Orçamento
+        >
+          Novo Orçamento
         </BS.Dropdown.Item>
       </BS.DropdownButton>
       {renderModalOrcamento()}
-      </S.PageContainer>      
-    );
+    </S.PageContainer>
+  );
 };

@@ -2,18 +2,18 @@ import * as React from "react";
 import { string } from "yup/lib/locale";
 import { SERVICE } from "../budget.service";
 
-export interface IPlaneamento{
-
-    planeamento:{
-      id_planeamento: number;
-      montante_limite: number;  
-
-      prazo: string;
-    };
-  }
+export interface IPlaneamento {
+  id_planeamento: number;
+  montante_limite?: number;
+  prazo: string;
+  categoria: {
+    id_categoria: number;
+    nome: string;
+  };
+}
 
 export const useFetchPlaneamentos = (): [
-  data: IPlaneamento[],
+  response: IPlaneamento[],
   error: any,
   isLoadig: boolean
 ] => {
@@ -25,7 +25,7 @@ export const useFetchPlaneamentos = (): [
     const fetchData = () => {
       try {
         SERVICE.methods.getPlaneamentos().then((r) => {
-          setResponse(r.data);
+          setResponse([...r.data]);
           setIsLoading(false);
         });
       } catch (error) {
