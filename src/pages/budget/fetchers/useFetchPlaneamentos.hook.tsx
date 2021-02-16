@@ -25,7 +25,7 @@ export const useFetchPlaneamentos = (): [
     const fetchData = () => {
       try {
         SERVICE.methods.getPlaneamentos().then((r) => {
-          setResponse([...r.data]);
+          setResponse(r.data);
           setIsLoading(false);
         });
       } catch (error) {

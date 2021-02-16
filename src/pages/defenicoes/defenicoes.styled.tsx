@@ -23,6 +23,15 @@ export const PageContainer = styled.div`
     border-radius: 50% !important;
   }
 
+  .branco {
+    color: #fff;
+  }
+
+  .fundo-cizento {
+    background-color: #3b3b3b;
+    border-color: #3b3b3b;
+  }
+
   .negrito {
     font-weight: 600;
   }
