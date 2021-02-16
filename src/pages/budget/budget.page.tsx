@@ -117,9 +117,9 @@ export const BudgetPage: React.FC<IBudgetPageProps> = (props) => {
                   {planeamentos.map((plan) => {
                     return (
                       <tr>
-                        <td>{plan.montante_limite}</td>
-                        <td>{plan.id_planeamento}</td>
                         <td>{plan.categoria.nome}</td>
+                        <td>{plan.montante_limite}</td>
+                        <td>{plan.prazo}</td>
                       </tr>
                     );
                   })}
