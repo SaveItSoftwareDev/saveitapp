@@ -1,10 +1,22 @@
 import axios from "axios";
 
-export interface IDefinicoesData {
+// export enum EGender {
+//   MALE = "Masculino",
+//   FEMALE = "Feminino",
+// }
+
+export interface IRegisterData {
+  primeiro_nome: string;
+  ultimo_nome: string;
   email: string;
-  current_password: string;
-  new_password: string;
+  //  password: string;
+  idade?: number;
+  //  genero?: string;
+  cidade?: string;
+  profissao?: string;
 }
+
+const headersNotAuth = { "Content-Type": "application/json" };
 
 const authToken = JSON.parse(localStorage.getItem("token") || "{}");
 
@@ -15,32 +27,19 @@ const headers = {
 
 export const SERVICE = {
   routes: {
-    update: "api/v1/users/set_password",
-    delete: "api/v1/users/me",
+    perfis: "perfis",
     me: "api/v1/users/me",
   },
   methods: {
-    doUpdate: (data: IDefinicoesData) => {
+    doRegister: (data: IRegisterData) => {
       return axios.post(
-        `http://127.0.0.1:8000/${SERVICE.routes.update}/`,
-
+        `http://127.0.0.1:8000/${SERVICE.routes.perfis}/`,
         data,
         {
-          headers,
+          headers: headersNotAuth,
         }
       );
     },
-
-    delete: () => {
-      return axios.delete(
-        `http://127.0.0.1:8000/${SERVICE.routes.delete}/`,
-
-        {
-          headers,
-        }
-      );
-    },
-
     getMe: () => {
       return axios.get(`http://127.0.0.1:8000/${SERVICE.routes.me}/`, {
         headers,

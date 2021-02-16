@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as S from "./defenicoes.styled";
-import { IDefinicoesData, SERVICE } from "./defenicoes.service";
+import { IRegisterData, SERVICE } from "./defenicoes.service";
 
 import * as BS from "react-bootstrap";
 
@@ -11,44 +11,33 @@ import { useHistory } from "react-router-dom";
 import useFetchMe from "../dashboard/fetchers/useFetchMe.hook";
 
 const schema = yup.object({
-  current_password: yup.string().trim().required(),
-  new_password: yup
-    .string()
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-    )
-    .required(),
+  primeiro_nome: yup.string().trim().required().min(1).max(20),
+  ultimo_nome: yup.string().trim().required().min(1).max(20),
+  email: yup.string().trim().required().max(35).min(1),
+  // password: yup.string().trim().required().min(5),
+  idade: yup.number().min(2),
+  //genero: yup.string().min(1).max(30),
+  cidade: yup.string().min(2).max(20),
+  profissao: yup.string().min(2).max(20),
 });
 
-interface IDefinicoesPageProps {}
+const initialValues: IRegisterData = {
+  primeiro_nome: "",
+  ultimo_nome: "",
+  email: "",
+  //password: "",
+  idade: undefined,
+  //genero: "",
+  cidade: "",
+  profissao: "",
+};
 
-interface IDefinicoesMessage {
-  hasMessage: boolean;
-  type: "danger" | "success";
-  message: string;
-}
+interface IRegisterPageProps {}
 
-export const DefinicoesPage: React.FC<IDefinicoesPageProps> = (props) => {
+export const RegisterPage: React.FC<IRegisterPageProps> = (props) => {
   const history = useHistory();
 
-  const [
-    messageOnDefinicoes,
-    setMessageOnDefinicoes,
-  ] = React.useState<IDefinicoesMessage>({
-    hasMessage: false,
-    type: "danger",
-    message: "",
-  });
-
   const [meData] = useFetchMe();
-
-  const initialValues: IDefinicoesData = {
-    email: meData.email,
-    current_password: "",
-    new_password: "",
-  };
-
   return (
     <S.PageContainer>
       <BS.Container fluid className="h-100">
@@ -58,83 +47,18 @@ export const DefinicoesPage: React.FC<IDefinicoesPageProps> = (props) => {
               <BS.Row
                 className="branco"
                 onClick={() => {
-                  history.push("/dashboard");
+                  history.push("/login");
                 }}
               >
                 <h1>Save iT</h1>
               </BS.Row>
               <BS.Row className="mt-2">
                 <BS.Col lg={12}>
-                  <h5 className="branco">{`Bem vindo(a) ${meData.username}`}</h5>
-                </BS.Col>
-              </BS.Row>
-              <BS.Row className="mt-2">
-                <BS.Col lg={12}>
-                  <BS.Button
-                    variant="secondary"
-                    className="fundo-cizento"
-                    onClick={() => {
-                      history.push("/dashboard");
-                    }}
-                  >
-                    Dashboard
-                  </BS.Button>
-                </BS.Col>
-              </BS.Row>
-              <BS.Row className="mt-2">
-                <BS.Col lg={12}>
-                  <BS.Button
-                    variant="secondary"
-                    className="fundo-cizento"
-                    onClick={() => {
-                      history.push("/budget");
-                    }}
-                  >
-                    Planeamentos
-                  </BS.Button>
-                </BS.Col>
-              </BS.Row>
-              <BS.Row className="mt-2">
-                <BS.Col lg={12}>
-                  <BS.Button variant="secondary" className="fundo-cizento">
-                    Investimentos
-                  </BS.Button>
-                </BS.Col>
-              </BS.Row>
-              <BS.Row className="mt-2">
-                <BS.Col lg={12}>
-                  <BS.Button variant="secondary" className="fundo-cizento">
-                    Alertas
-                  </BS.Button>
-                </BS.Col>
-              </BS.Row>
-              <BS.Row className="mt-2">
-                <BS.Col lg={12}>
-                  <BS.Button
-                    variant="secondary"
-                    className="fundo-cizento"
-                    onClick={() => {
-                      history.push("/definicoes");
-                    }}
-                  >
-                    Definições
-                  </BS.Button>
-                </BS.Col>
-              </BS.Row>
-              <BS.Row className="mt-2">
-                <BS.Col lg={12}>
-                  <BS.Button
-                    variant="secondary"
-                    className="fundo-cizento"
-                    onClick={() => {
-                      // quando o user clica no logout o localstorage é limpo, i.e. o token
-                      localStorage.clear();
-                      // user é enviado para a página de login
-                      history.push("/login");
-                    }}
-                  >
-                    Sair
-                  </BS.Button>
+                  <BS.Image
+                    className={"avatar"}
+                    src="images/avatar.png"
+                    rounded
+                  />
                 </BS.Col>
               </BS.Row>
             </BS.Container>
@@ -144,29 +68,21 @@ export const DefinicoesPage: React.FC<IDefinicoesPageProps> = (props) => {
               <S.FormContainer>
                 <Formik
                   validationSchema={schema}
-                  onSubmit={(values: IDefinicoesData) => {
+                  onSubmit={(values: IRegisterData) => {
                     SERVICE.methods
-                      .doUpdate(values)
+                      .doRegister(values)
                       .then((result) => {
-                        setMessageOnDefinicoes({
-                          hasMessage: true,
-                          type: "success",
-                          message: "Atualizado com sucesso",
-                        });
+                        console.log(
+                          "REGISTO COM SUCESSO! -> Redirecionar para DASHBOARD"
+                        );
+                        history.push("/login");
                       })
-                      .catch((err) => {
-                        setMessageOnDefinicoes({
-                          hasMessage: true,
-                          type: "danger",
-                          message: "Erro ao atualizar password",
-                        });
-                      });
+                      .catch((err) => console.log("Erro ao fazer registo"));
                   }}
                   initialValues={initialValues}
                 >
                   {({
                     handleSubmit,
-                    resetForm,
                     handleChange,
                     handleBlur,
                     values,
@@ -184,71 +100,111 @@ export const DefinicoesPage: React.FC<IDefinicoesPageProps> = (props) => {
                           <BS.Form.Group>
                             <BS.Form.Control
                               className="italico"
-                              type="email"
-                              name="email"
-                              disabled
+                              type="text"
+                              name="primeiro_nome"
+                              placeholder="primeiro nome"
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              value={meData.email}
+                              value={values.primeiro_nome}
+                              isValid={
+                                touched.primeiro_nome && !errors.primeiro_nome
+                              }
+                            />
+                          </BS.Form.Group>
+                          <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="text"
+                              name="ultimo_nome"
+                              placeholder="último nome"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.ultimo_nome}
+                              isValid={
+                                touched.ultimo_nome && !errors.ultimo_nome
+                              }
+                            />
+                          </BS.Form.Group>
+                          <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="email"
+                              name="email"
+                              placeholder="e-mail"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.email}
                               isValid={touched.email && !errors.email}
                             />
                           </BS.Form.Group>
 
-                          <BS.Form.Group>
+                          {/* <BS.Form.Group>
                             <BS.Form.Control
                               className="italico"
                               type="password"
-                              name="current_password"
-                              placeholder="password atual"
+                              name="password"
+                              placeholder="password"
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              value={values.current_password}
-                              isValid={
-                                touched.current_password &&
-                                !errors.current_password
-                              }
+                              value={values.password}
+                              isValid={touched.password && !errors.password}
+                            />
+                          </BS.Form.Group> */}
+
+                          <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="number"
+                              name="idade"
+                              placeholder="idade"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.idade}
+                              isValid={touched.idade && !errors.idade}
+                            />
+                          </BS.Form.Group>
+
+                          {/* <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="text"
+                              name="genero"
+                              placeholder="género"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.genero}
+                              isValid={touched.genero && !errors.genero}
+                            />
+                          </BS.Form.Group> */}
+                          <BS.Form.Group>
+                            <BS.Form.Control
+                              className="italico"
+                              type="text"
+                              name="cidade"
+                              placeholder="cidade"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.cidade}
+                              isValid={touched.cidade && !errors.cidade}
                             />
                           </BS.Form.Group>
 
                           <BS.Form.Group>
                             <BS.Form.Control
                               className="italico"
-                              type="password"
-                              name="new_password"
-                              placeholder="password nova"
+                              type="text"
+                              name="profissao"
+                              placeholder="profissão"
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              value={values.new_password}
-                              isValid={
-                                touched.new_password && !errors.new_password
-                              }
+                              value={values.profissao}
+                              isValid={touched.profissao && !errors.profissao}
                             />
                           </BS.Form.Group>
-                        </BS.Col>
-                      </BS.Row>
-                      <BS.Row className="mt-2">
-                        <BS.Col>
-                          {messageOnDefinicoes.hasMessage && (
-                            <BS.Alert variant={messageOnDefinicoes.type}>
-                              {messageOnDefinicoes.message}
-                            </BS.Alert>
-                          )}
                         </BS.Col>
                       </BS.Row>
 
                       <BS.Row className="justify-content-between">
-                        <BS.Col lg={3}>
-                          <BS.Button
-                            variant="outline-secondary"
-                            type="button"
-                            className="w-100 negrito"
-                            onClick={() => {
-                              resetForm();
-                            }}
-                          >
-                            cancelar
-                          </BS.Button>
-                        </BS.Col>
                         <BS.Col lg={3}>
                           <BS.Button
                             variant="secondary"
@@ -258,38 +214,22 @@ export const DefinicoesPage: React.FC<IDefinicoesPageProps> = (props) => {
                             salvar
                           </BS.Button>
                         </BS.Col>
+                        <BS.Col lg={3}>
+                          <BS.Button
+                            variant="outline-secondary"
+                            type="submit"
+                            className="w-100 negrito"
+                            onClick={() => {
+                              history.push("/login");
+                            }}
+                          >
+                            voltar
+                          </BS.Button>
+                        </BS.Col>
                       </BS.Row>
                     </BS.Form>
                   )}
                 </Formik>
-                <BS.Row className="justify-content-between mt-2">
-                  <BS.Col lg={9}></BS.Col>
-                  <BS.Col lg={3}>
-                    <BS.Button
-                      variant="danger"
-                      type="button"
-                      className="w-100 negrito"
-                      onClick={() => {
-                        SERVICE.methods
-                          .delete()
-                          .then((result) => {
-                            console.log("ELIMINADO COM SUCESSO!");
-                            localStorage.clear();
-                            history.push("/login");
-                          })
-                          .catch((err) => {
-                            setMessageOnDefinicoes({
-                              hasMessage: true,
-                              type: "danger",
-                              message: "Erro ao eliminar o utilizador",
-                            });
-                          });
-                      }}
-                    >
-                      eliminar conta
-                    </BS.Button>
-                  </BS.Col>
-                </BS.Row>
               </S.FormContainer>
             </BS.Container>
           </BS.Col>
