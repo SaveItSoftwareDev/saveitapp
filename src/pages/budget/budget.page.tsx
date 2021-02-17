@@ -7,6 +7,8 @@ import * as yup from "yup";
 
 import ModalRegisto from "./components/modal-registo.component";
 import useFetchPlaneamentos from "./fetchers/useFetchPlaneamentos.hook";
+import useFetchMe from "../dashboard/fetchers/useFetchMe.hook";
+import { isLoggedIn } from "../../helpers/authReducer.reducer";
 
 interface IBudgetPageProps {}
 
@@ -22,6 +24,14 @@ export const BudgetPage: React.FC<IBudgetPageProps> = (props) => {
   const [showModalOrcamento, setShowModalOrcamento] = React.useState<boolean>(
     false
   );
+
+  const [me] = useFetchMe();
+
+  React.useEffect(() => {
+    if (!isLoggedIn()) {
+      history.push("login");
+    }
+  }, []);
 
   const renderModalOrcamento = () => {
     return (
@@ -46,18 +56,23 @@ export const BudgetPage: React.FC<IBudgetPageProps> = (props) => {
               >
                 <h1 className="w-100">Save iT</h1>
               </BS.Row>
+             
               <BS.Row className="mt-2">
                 <BS.Col lg={12}>
-                  <BS.Image
-                    className={"avatar"}
-                    src="images/avatar.png"
-                    rounded
-                  />
+                  <h5 className="branco">{`Bem vindo(a) ${me.username}`}</h5>
                 </BS.Col>
               </BS.Row>
               <BS.Row className="mt-2">
                 <BS.Col lg={12}>
-                  <h5 className="branco">Bem vindo Tiago!</h5>
+                  <BS.Button
+                    variant="secondary"
+                    className="fundo-cizento"
+                    onClick={() => {
+                      history.push("/dashboard");
+                    }}
+                  >
+                    Dashboard
+                  </BS.Button>
                 </BS.Col>
               </BS.Row>
               <BS.Row className="mt-2">
@@ -83,7 +98,13 @@ export const BudgetPage: React.FC<IBudgetPageProps> = (props) => {
               </BS.Row>
               <BS.Row className="mt-2">
                 <BS.Col lg={12}>
-                  <BS.Button variant="secondary" className="fundo-cizento">
+                  <BS.Button
+                    variant="secondary"
+                    className="fundo-cizento"
+                    onClick={() => {
+                      history.push("/definicoes");
+                    }}
+                  >
                     Definições
                   </BS.Button>
                 </BS.Col>
