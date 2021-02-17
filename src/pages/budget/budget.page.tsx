@@ -54,9 +54,9 @@ export const BudgetPage: React.FC<IBudgetPageProps> = (props) => {
                   history.push("/dashboard");
                 }}
               >
+              Dashboard
                 <h1 className="w-100">Save iT</h1>
-              </BS.Row>
-             
+              </BS.Row>            
               <BS.Row className="mt-2">
                 <BS.Col lg={12}>
                   <h5 className="branco">{`Bem vindo(a) ${me.username}`}</h5>
@@ -115,6 +115,9 @@ export const BudgetPage: React.FC<IBudgetPageProps> = (props) => {
                     variant="secondary"
                     className="fundo-cizento"
                     onClick={() => {
+                      // quando o user clica no logout o localstorage é limpo, i.e. o token
+                      localStorage.clear();
+                      // user é enviado para a página de login
                       history.push("/login");
                     }}
                   >
