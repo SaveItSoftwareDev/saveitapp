@@ -19,7 +19,8 @@ const schema = yup.object({
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-    ),
+    )
+    .required(),
   username: yup.string().trim().required().min(5),
   //idade: yup.number().min(2),
   //genero: yup.string().min(1).max(30),

@@ -243,7 +243,13 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
               </BS.Row>
               <BS.Row className="mt-2">
                 <BS.Col lg={12}>
-                  <BS.Button variant="secondary" className="fundo-cizento">
+                  <BS.Button
+                    variant="secondary"
+                    className="fundo-cizento"
+                    onClick={() => {
+                      history.push("/definicoes");
+                    }}
+                  >
                     Definições
                   </BS.Button>
                 </BS.Col>
