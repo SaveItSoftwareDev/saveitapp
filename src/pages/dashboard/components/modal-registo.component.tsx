@@ -52,7 +52,6 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
     tipo: props.tipo,
   };
 
-  const history = useHistory();
   const [
     categoriasData,
     errorCategorias,
@@ -240,9 +239,6 @@ export const ModalRegisto = (props: IModalRegistoProps) => {
                     variant="secondary"
                     type="submit"
                     className="w-100 negrito"
-                    /* onClick={() => {
-                      props.onHide(false);
-                    }} */
                   >
                     salvar
                   </BS.Button>

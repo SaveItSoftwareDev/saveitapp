@@ -8,7 +8,7 @@ import * as yup from "yup";
 import ModalRegisto from "./components/modal-registo.component";
 import useFetchPlaneamentos from "./fetchers/useFetchPlaneamentos.hook";
 import useFetchMe from "../dashboard/fetchers/useFetchMe.hook";
-import { isLoggedIn } from "../../helpers/authReducer.reducer";
+import { doLogout, isLoggedIn } from "../../helpers/authReducer.reducer";
 
 interface IBudgetPageProps {}
 
@@ -54,9 +54,9 @@ export const BudgetPage: React.FC<IBudgetPageProps> = (props) => {
                   history.push("/dashboard");
                 }}
               >
-              Dashboard
+                Dashboard
                 <h1 className="w-100">Save iT</h1>
-              </BS.Row>            
+              </BS.Row>
               <BS.Row className="mt-2">
                 <BS.Col lg={12}>
                   <h5 className="branco">{`Bem vindo(a) ${me.username}`}</h5>
@@ -116,9 +116,7 @@ export const BudgetPage: React.FC<IBudgetPageProps> = (props) => {
                     className="fundo-cizento"
                     onClick={() => {
                       // quando o user clica no logout o localstorage é limpo, i.e. o token
-                      localStorage.clear();
-                      // user é enviado para a página de login
-                      history.push("/login");
+                      doLogout(history);
                     }}
                   >
                     Sair

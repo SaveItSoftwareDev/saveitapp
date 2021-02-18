@@ -9,7 +9,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import useFetchMe from "../dashboard/fetchers/useFetchMe.hook";
-import { isLoggedIn } from "../../helpers/authReducer.reducer";
+import { doLogout, isLoggedIn } from "../../helpers/authReducer.reducer";
 
 const schema = yup.object({
   current_password: yup.string().trim().required(),
@@ -143,9 +143,7 @@ export const DefinicoesPage: React.FC<IDefinicoesPageProps> = (props) => {
                     className="fundo-cizento"
                     onClick={() => {
                       // quando o user clica no logout o localstorage é limpo, i.e. o token
-                      localStorage.clear();
-                      // user é enviado para a página de login
-                      history.push("/login");
+                      doLogout(history);
                     }}
                   >
                     Sair

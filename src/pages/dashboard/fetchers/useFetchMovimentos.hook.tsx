@@ -1,5 +1,4 @@
 import * as React from "react";
-import { string } from "yup/lib/locale";
 import { SERVICE } from "../dashboard.service";
 
 export interface IMovimento {

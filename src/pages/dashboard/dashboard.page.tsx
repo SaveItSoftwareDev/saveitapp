@@ -21,7 +21,7 @@ import useFetchMe from "./fetchers/useFetchMe.hook";
 import useFetchTotaisPorMes, {
   ETipoTotal,
 } from "./fetchers/useFetchTotaisPorMes.hook";
-import { isLoggedIn } from "../../helpers/authReducer.reducer";
+import { doLogout, isLoggedIn } from "../../helpers/authReducer.reducer";
 
 interface IDashboarPageProps {}
 
@@ -76,7 +76,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
       />,
       <BS.Pagination.Last
         onClick={() => {
-          setMovimentosPage(Math.ceil(movimentosSize / 5));
+          setMovimentosPage(Math.ceil(movimentosSize / 10));
         }}
       />
     );
@@ -261,9 +261,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
                     className="fundo-cizento"
                     onClick={() => {
                       // quando o user clica no logout o localstorage é limpo, i.e. o token
-                      localStorage.clear();
-                      // user é enviado para a página de login
-                      history.push("/login");
+                      doLogout(history);
                     }}
                   >
                     Sair
