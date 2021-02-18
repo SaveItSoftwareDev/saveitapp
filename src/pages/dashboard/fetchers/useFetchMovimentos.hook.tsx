@@ -47,7 +47,7 @@ export const useFetchMovimentos = (
     fetchData();
   }, []);
 
-  const start = page === 1 ? 0 : page * 10;
+  const start = page === 1 ? 0 : (page - 1) * 10;
   const end = start + 10;
   return [response.slice(start, end), response.length, error, isLoading];
 };

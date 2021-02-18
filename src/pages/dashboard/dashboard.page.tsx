@@ -55,7 +55,7 @@ export const DashboarPage: React.FC<IDashboarPageProps> = (props) => {
     ];
 
     // vamos assumir que cada página tem 10 linhas, o Math.ceil arredonda para cima
-    for (let index = 1; index < Math.ceil(movimentosSize / 10); index++) {
+    for (let index = 1; index <= Math.ceil(movimentosSize / 10); index++) {
       items.push(
         <BS.PageItem
           active={index === movimentosPage}
