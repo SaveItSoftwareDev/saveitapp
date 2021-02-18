@@ -33,6 +33,11 @@ interface IDefinicoesMessage {
 export const DefinicoesPage: React.FC<IDefinicoesPageProps> = (props) => {
   const history = useHistory();
 
+  const [eliminarContaData, setEliminarContaData] = React.useState<{
+    showForm: boolean;
+    current_password: string;
+  }>({ showForm: false, current_password: "" });
+
   // este effect serve para verificar se o user está logado (usa uma função que verifica se existe um token em localstorage)
   // caso o user n esteja logado é mandado para a página de login
   // este fetcher executa uma vez quando a página é renderizada
@@ -273,31 +278,63 @@ export const DefinicoesPage: React.FC<IDefinicoesPageProps> = (props) => {
                   )}
                 </Formik>
                 <BS.Row className="justify-content-between mt-2">
-                  <BS.Col lg={9}></BS.Col>
                   <BS.Col lg={3}>
                     <BS.Button
-                      variant="danger"
-                      type="button"
-                      className="w-100 negrito"
+                      variant="link"
+                      className="w-100 botao-registo"
                       onClick={() => {
-                        SERVICE.methods
-                          .delete()
-                          .then((result) => {
-                            console.log("ELIMINADO COM SUCESSO!");
-                            localStorage.clear();
-                            history.push("/login");
-                          })
-                          .catch((err) => {
-                            setMessageOnDefinicoes({
-                              hasMessage: true,
-                              type: "danger",
-                              message: "Erro ao eliminar o utilizador",
-                            });
-                          });
+                        setEliminarContaData({
+                          ...eliminarContaData,
+                          showForm: true,
+                        });
                       }}
                     >
-                      eliminar conta
+                      Eliminar conta
                     </BS.Button>
+                  </BS.Col>
+                  <BS.Col lg={6}>
+                    {eliminarContaData.showForm && (
+                      <BS.Form.Control
+                        className="italico"
+                        type="password"
+                        name="current_password"
+                        placeholder="password atual"
+                        onChange={(e) => {
+                          setEliminarContaData({
+                            ...eliminarContaData,
+                            current_password: e.target.value,
+                          });
+                        }}
+                        value={eliminarContaData.current_password}
+                      />
+                    )}
+                  </BS.Col>
+                  <BS.Col lg={3}>
+                    {eliminarContaData.showForm && (
+                      <BS.Button
+                        variant="danger"
+                        type="button"
+                        className="w-100 negrito"
+                        onClick={() => {
+                          SERVICE.methods
+                            .delete(eliminarContaData.current_password)
+                            .then((result) => {
+                              console.log("ELIMINADO COM SUCESSO!");
+                              localStorage.clear();
+                              history.push("/login");
+                            })
+                            .catch((err) => {
+                              setMessageOnDefinicoes({
+                                hasMessage: true,
+                                type: "danger",
+                                message: "Erro ao eliminar o utilizador",
+                              });
+                            });
+                        }}
+                      >
+                        eliminar conta
+                      </BS.Button>
+                    )}
                   </BS.Col>
                 </BS.Row>
               </S.FormContainer>

@@ -31,12 +31,13 @@ export const SERVICE = {
       );
     },
 
-    delete: () => {
+    delete: (current_password: string) => {
       return axios.delete(
         `http://127.0.0.1:8000/${SERVICE.routes.delete}/`,
 
         {
           headers,
+          data: { current_password },
         }
       );
     },
