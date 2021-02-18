@@ -54,7 +54,6 @@ export const BudgetPage: React.FC<IBudgetPageProps> = (props) => {
                   history.push("/dashboard");
                 }}
               >
-                Dashboard
                 <h1 className="w-100">Save iT</h1>
               </BS.Row>
               <BS.Row className="mt-2">

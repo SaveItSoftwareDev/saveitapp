@@ -168,15 +168,6 @@ export const ModalRegisto = (props: IModalOrcamentoProps) => {
               <BS.Row className="justify-content-between">
                 <BS.Col lg={3}>
                   <BS.Button
-                    variant="secondary"
-                    type="submit"
-                    className="w-100 negrito"
-                  >
-                    salvar
-                  </BS.Button>
-                </BS.Col>
-                <BS.Col lg={3}>
-                  <BS.Button
                     variant="outline-secondary"
                     type="submit"
                     className="w-100 negrito"
@@ -185,6 +176,15 @@ export const ModalRegisto = (props: IModalOrcamentoProps) => {
                     }}
                   >
                     voltar
+                  </BS.Button>
+                </BS.Col>
+                <BS.Col lg={3}>
+                  <BS.Button
+                    variant="secondary"
+                    type="submit"
+                    className="w-100 negrito"
+                  >
+                    salvar
                   </BS.Button>
                 </BS.Col>
               </BS.Row>
